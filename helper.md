@@ -267,6 +267,9 @@ chown -R nobody.nobody /www/
 chmod -R 775 /www/
 
 fuser -k 80/tcp
+
+查看mysql 读取配置的顺序
+mysqld --help --verbose | more 
 ```
 
 ## 常见问题
