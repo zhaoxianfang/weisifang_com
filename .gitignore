@@ -17,3 +17,29 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# ======== 自定义忽略文件 ==========
+/public/files
+/public/photos
+
+/.vagrant
+
+# 忽略仓库中根目录下的 .settings 文件或目录
+/.settings
+# 忽略所有 . 开头的目录
+.*/
+
+!.gitignore
+# 忽略符号链接文件夹images
+/public/images
+.DS_Store
+*.log
+/.git
+
+# Office 缓存文件
+~'$'*.docx
+~'$'*.ppt
+~'$'*.pptx
+~'$'*.xls
+
+composer.lock
