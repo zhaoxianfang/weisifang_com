@@ -9,6 +9,9 @@
   border: 0!important;
   border-radius: 0!important;
 }
+.top-navigation .header-user-name {
+    margin-left: 6px;
+}
 @media (max-width: 991.98px) {
   .top-navigation .header-user-name {
       display: none!important;

@@ -33,7 +33,6 @@ class CommonBaseMiddleware
             $userId = auth('web')->check() ? auth('web')->id() : (auth('admin')->check() ? auth('admin')->id() : 0);
             SystemLog::writeLog('操作请求', [], $userId, [], SystemLog::LEVEL_LOWEST);
         } catch (\Exception $err) {
-            dd($err);
         }
         return $response;
 
