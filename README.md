@@ -59,3 +59,14 @@ $app->singleton(
     \Modules\System\Exceptions\CustomHandler::class // 自定义接管系统异常
 );
 ```
+
+
+git忽略文件不生效
+```
+解决方案
+# 清除缓存文件
+git rm -r --cached .
+git add .
+git commit -m ".gitignore重写缓存"
+git push
+```
