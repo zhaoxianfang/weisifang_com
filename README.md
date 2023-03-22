@@ -32,6 +32,17 @@ php artisan vendor:publish --provider="zxf\laravel\ServiceProvider"
     },
 ```
 
+### 安装 passport
+```
+composer require laravel/passport
+php artisan migrate
+php artisan passport:install
+
+php artisan passport:keys
+修改 access_token 长度
+php artisan passport:keys --length=512 --force
+```
+
 ### 创建模块
 ```
 php artisan module:make System

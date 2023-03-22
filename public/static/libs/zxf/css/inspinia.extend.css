@@ -1,0 +1,70 @@
+
+/** 修改默认 radio、checkbox 样式 开始 */
+input[type=radio]{width:20px;height:20px;font-family:Arial;display:inline-block;text-align:center;vertical-align:middle;line-height:14px;margin:1px;appearance:none;-webkit-appearance:none;outline:none!important;}
+input[type=radio]:after{content:"";display:block;font-family:Arial;width:20px;height:20px;border-radius:50%;text-align:center;line-height:14px;font-size:16px;color:#fff;border:3px solid#bfbfbf;background-color:#fff;box-sizing:border-box;position:relative;left:-2px;}
+input[type=radio]:checked:after{content:"✓";font-family:Arial;font-size:18px;font-weight:bold;color:#fff;background-color:#3582E9;border:3px solid#3582E9;margin:1px;}
+input[type=checkbox]{width:20px;height:20px;display:inline-block;font-family:Arial;text-align:center;vertical-align:middle;line-height:14px;margin:1px;appearance:none;-webkit-appearance:none;outline:none!important;}
+input[type=checkbox]:after{content:"";display:block;width:20px;height:20px;font-family:Arial;text-align:center;line-height:14px;font-size:16px;color:#fff;border:2px solid#ddd;background-color:#fff;box-sizing:border-box;}
+input[type=checkbox]:checked:after{content:'\2713';font-family:Arial;background-color:#fff;color:#3582E9;border:2px solid#3582E9;font-size:20px;font-weight:bold;}
+input[type=radio][disabled],input[type=checkbox][disabled],input[type=radio][disabled]+label,input[type=checkbox][disabled]+label{cursor:not-allowed;}
+input[type=radio],input[type=checkbox],input[type=radio]+label,input[type=checkbox]+label{cursor:pointer;}
+
+/** 修改默认 radio、checkbox 样式 结束 */
+
+/*推荐代码展示*/
+pre {
+    color: #444!important;
+    margin: 5px auto;
+    padding: 0px 15px;
+    border-left: 8px solid #90CAF9;
+    background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAmCAIAAACphTeFAAAAJElEQVRIx2N4RS5gGNU5qnNU56hOZJ2fyQWjOkd1juoc1YkMAKDL4lkok3p7AAAAAElFTkSuQmCC) repeat;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    letter-spacing: 1.2px;
+    line-height: 14.0px;
+    background-size: 100% 28px;
+}
+
+.page-title-right{
+    float: right;
+}
+.page-title-box{
+    width: 100%;
+}
+.breadcrumb{
+    background-color: #f3f3f4;
+}
+.top-navigation .wrapper.wrapper-content {
+    padding: 10px;
+}
+.article h1 {
+    font-size: 24px;
+}
+.article-title {
+    text-align: center;
+    margin: 35px 0 20px 0;
+}
+.vertical-container{
+    width: 100%;
+}
+@media (min-width: 1450px){
+    .container {
+        max-width: 85%;
+    }
+}
+@media (min-width: 768px){
+    .custom-page-heading{
+        padding: 10px;
+        margin-top: 30px;
+    }
+}
+@media (max-width: 768px){
+    .custom-page-heading{
+        padding: 10px;
+        margin-top: 0px;
+    }
+}
+.top-navigation.body-small .wrapper.wrapper-content{
+    padding: 20px 0!important;
+    margin-top: 30px;
+}

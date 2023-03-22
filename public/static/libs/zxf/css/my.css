@@ -1,0 +1,433 @@
+html {
+    scroll-padding-top: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 垂直居中 水平居中*/
+.vertical-center {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/*居中*/
+.center {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+code {
+    white-space: pre !important;
+}
+
+/*后台登录*/
+.auth-form-group-custom label {
+    top: 3px;
+    left: 47px;
+}
+
+.auth-form-group-custom .form-control {
+    padding-top: 30px;
+    height: 55px;
+    padding-left: 47px;
+}
+
+.auth-form-group-custom .auti-custom-input-icon {
+    left: 13px;
+}
+
+/*后台登录 end*/
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.img-circle {
+    width: 35px;
+    border-radius: 50%;
+}
+
+pre.prettyprint::before {
+    content: unset !important;
+}
+
+/**
+ * 气泡提示
+ */
+#mytip {
+    z-index: 9999;
+    display: none;
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    padding: 3px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    font-family: "Courier New" consolas;
+    display: inline-block;
+    text-align: center
+}
+
+#mytip:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid
+}
+
+#mytip.top:after {
+    bottom: 0;
+    left: 50%;
+    margin-left: -5px;
+    margin-bottom: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: #000
+}
+
+#mytip.bottom:after {
+    top: 0;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #000
+}
+
+#mytip.left:after {
+    top: 50%;
+    right: 0;
+    margin-top: -5px;
+    margin-right: -5px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #000
+}
+
+#mytip.right:after {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    margin-left: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #000
+}
+
+#mytip.track {
+    text-align: left
+}
+
+#mytip.track:after {
+    top: 0;
+    left: 10px;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #000
+}
+
+/**
+ * 气泡提示 end
+ */
+
+.color-green {
+    color: #3CB371;
+}
+
+/*鼠标不能选择文字*/
+.not-selece {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.layui-layer-footer {
+    text-align: center !important;
+}
+
+
+/** 修改默认 radio、checkbox 样式 开始 */
+input[type=radio] {
+    width: 16px;
+    height: 16px;
+    font-family: Arial;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 14px;
+    margin: 1px;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none !important;
+}
+
+input[type=radio]:after {
+    content: "";
+    display: block;
+    font-family: Arial;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 14px;
+    font-size: 16px;
+    color: #fff;
+    border: 2px solid #bfbfbf;
+    background-color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    left: -2px;
+}
+
+input[type=radio]:checked:after {
+    content: "✓";
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #3582E9;
+    border: 1px solid #3582E9;
+    margin: 1px;
+}
+
+input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    font-family: Arial;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none !important;
+}
+
+input[type=checkbox]:after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    font-family: Arial;
+    text-align: center;
+    line-height: 12px;
+    font-size: 16px;
+    color: #fff;
+    border: 2px solid #ddd;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+input[type=checkbox]:checked:after {
+    content: '\2713';
+    font-family: Arial;
+    background-color: #fff;
+    color: #3582E9;
+    border: 2px solid #3582E9;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+input[type=radio][disabled], input[type=checkbox][disabled], input[type=radio][disabled] + label, input[type=checkbox][disabled] + label {
+    cursor: not-allowed;
+}
+
+input[type=radio], input[type=checkbox], input[type=radio] + label, input[type=checkbox] + label {
+    cursor: pointer;
+}
+
+/** 修改默认 radio、checkbox 样式 结束 */
+
+/*禁止disabled*/
+*:disabled {
+    cursor: not-allowed;
+    cursor: no-drop;
+}
+
+/*滚动条美化*/
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px
+}
+
+*::-webkit-scrollbar-track {
+    background: #f3f4f9;
+    border-radius: 2px
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #c8d2e0;
+    border-radius: 10px
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #333
+}
+
+*::-webkit-scrollbar-corner {
+    background: #c8d2e0
+}
+
+* {
+    scrollbar-color: #c8d2e0 #f3f4f9;
+    scrollbar-width: thin
+}
+
+/*滚动条美化 end*/
+
+
+/*马赛克透明背景*/
+img {
+    background-position: 0px 0px, 10px 10px;
+    background-size: 20px 20px;
+    background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%), linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
+}
+
+#page-topbar img {
+    background-position: unset;
+    background-size: unset;
+    background-image: unset;
+}
+
+/*四角边框*/
+.rect {
+    background: linear-gradient(to left, #196aa8, #196aa8) left top no-repeat,
+    linear-gradient(to bottom, #196aa8, #196aa8) left top no-repeat,
+    linear-gradient(to left, #196aa8, #196aa8) right top no-repeat,
+    linear-gradient(to bottom, #196aa8, #196aa8) right top no-repeat,
+    linear-gradient(to left, #196aa8, #196aa8) left bottom no-repeat,
+    linear-gradient(to bottom, #196aa8, #196aa8) left bottom no-repeat,
+    linear-gradient(to left, #196aa8, #196AA8) right bottom no-repeat,
+    linear-gradient(to left, #196aa8, #196aa8) right bottom no-repeat;
+    background-size: 1px 10px, 20px 1px, 1px 10px, 20px 1px;
+}
+
+/*ul li 样式优化*/
+.ul-list dl, .ul-list ol, .ul-list ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ul-list ul, .ul-list li {
+    margin-left: -10px;
+}
+
+.ul-list {
+    clear: both;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #676a6c;
+    overflow-x: hidden;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px 0 10px 15px;
+}
+
+.ul-list a {
+    color: #676a6c;
+    text-decoration: none !important;
+}
+
+.ul-list a:hover {
+    color: #fe7300 !important;
+}
+
+/*ul li 样式优化end*/
+
+/*优化 typeahead 搜索面板模板 开始*/
+.docs-typeahead-empty {
+    padding: 4px 0 4px 16px;
+    font-size: 14px;
+    margin-bottom: -20px;
+}
+
+.docs-search-header {
+    margin-bottom: 0;
+    padding: 5px 0 5px 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.docs-typeahead-item {
+    color: #000;
+    display: inline-block;
+    padding: 7px;
+    margin: 2px auto;
+    cursor: pointer;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    text-decoration: none;
+    width: 100%;
+}
+
+.docs-typeahead-item:nth-child(odd) {
+    background-color: #f6f6f6 !important;
+}
+
+.docs-typeahead-item:hover {
+    text-decoration: none !important;
+    color: #fff !important;
+    cursor: pointer;
+    background: #4183c4 !important;
+}
+
+.docs-typeahead-item-title {
+    line-height: 18px;
+    /*超出一行省略*/
+    width: 94%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.docs-typeahead-item-content {
+    line-height: 18px;
+}
+
+.docs-typeahead-content {
+    overflow: auto;
+    word-break: break-all;
+    max-height: 75vh;
+    padding-bottom: 20px;
+}
+
+.docs-search-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px;
+    background: #fff;
+}
+.docs-typeahead-input{
+    /* 输入框 */
+}
+.docs-typeahead-hint{
+    /*输入提示*/
+}
+
+/*优化 typeahead 搜索面板模板 结束*/

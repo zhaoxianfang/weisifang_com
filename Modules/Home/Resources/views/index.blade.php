@@ -1,4 +1,4 @@
-@extends('home::layouts.dashboard')
+@extends('home::layouts.home')
 
 @section('content')
     <div class="row">

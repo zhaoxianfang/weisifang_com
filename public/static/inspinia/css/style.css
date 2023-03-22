@@ -4573,7 +4573,9 @@ video {
   padding: 20px 10px 40px;
 }
 #page-wrapper {
-  padding: 0 15px;
+  /*padding: 0 15px;*/
+  padding: 0;
+  margin: 0;
   position: relative !important;
   flex-shrink: 1;
   width: calc(100% - 220px);
