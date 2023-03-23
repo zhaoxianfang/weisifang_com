@@ -60,6 +60,8 @@ git clone https://gitee用户名:私人令牌@gitee.com/gitee用户名/仓库名
 
 ## composer
 
+> https://zhuanlan.zhihu.com/p/569760310
+
 安装
 
 ```
@@ -90,9 +92,9 @@ composer install --ignore-platform-req=ext-sodium --ignore-platform-req=ext-sodi
 ```
 
 ### 如何安装和更新包
-本地没有有 `vendor` 文件夹时(初次执行时) 需要执行 `composer install` 会生成composer.lock
-新增修改了依赖包[本地已经有 `vendor` 文件夹时(已有`composer.lock`)] 需要执行 `composer update` 来跟新 `composer.json` 并重新生成`composer.lock`
 
+本地没有有 `vendor` 文件夹时(初次执行时) 需要执行 `composer install` 会生成composer.lock 新增修改了依赖包[本地已经有 `vendor` 文件夹时(已有`composer.lock`)]
+需要执行 `composer update` 来跟新 `composer.json` 并重新生成`composer.lock`
 
 默认地址改为中国镜像地址：
 
@@ -327,15 +329,13 @@ vim /etc/my.cnf
 sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 ```
 
-出现问题：Could not find package xxx with stability stable.
-是composer 的中国镜像出了问题，把他改了，换成另外一个地址就行了：
+出现问题：Could not find package xxx with stability stable. 是composer 的中国镜像出了问题，把他改了，换成另外一个地址就行了：
 
 ```
 composer config -g repo.packagist composer https://packagist.org
 ```
 
-Git拉取的代码出现不管有没有修改的文件都变成了修改状态处理方法
-处理方法：
+Git拉取的代码出现不管有没有修改的文件都变成了修改状态处理方法 处理方法：
 
 ```
 // 项目目录下执行
@@ -345,5 +345,10 @@ git config core.filemode false
 git config --global core.filemode false
 ```
 
-laravel file_put_contents(xxxx): Failed to open stream: Permission denied
-解决(直接给文件夹设置777权限)：chmod -R 777 xxx/
+laravel file_put_contents(xxxx): Failed to open stream: Permission denied 解决(直接给文件夹设置777权限)：chmod -R 777 xxx/
+
+## 其他
+
+composer总结 https://zhuanlan.zhihu.com/p/569760310
+PHP基础知识 - PHP函数大全 https://blog.csdn.net/qq_35453862/article/details/125874242
+PHP 函数的完整参考手册 https://blog.csdn.net/Fancie_Wong/article/details/53007273
