@@ -28,6 +28,8 @@ yarn-error.log
 /.settings
 # 忽略所有 . 开头的目录
 .*/
+# 忽略所有 . 开头的文件
+.*
 
 !.gitignore
 # 忽略符号链接文件夹images

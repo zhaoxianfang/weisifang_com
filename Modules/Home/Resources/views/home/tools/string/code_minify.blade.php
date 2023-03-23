@@ -20,12 +20,12 @@
 
 <!-- 页面内容 -->
 @section('content')
-
+<div class="article">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h3>JS、CSS代码压缩 <small>Code Minify</small></h3>
+                    <h1>JS、CSS代码压缩 <small>Code Minify</small></h1>
                     <div class="ibox-tools">
                         <span class="label label-warning-light float-right">:)</span>
                     </div>
@@ -33,7 +33,7 @@
                 <div class="ibox-content" style="padding: 0 20px;">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5 class="m-t-none m-b">原代码：</h5>
+                            <h3 class="m-t-none m-b">原代码：</h3>
                             <form role="form" method="post">
                                 <div class="form-group row">
                                     <textarea class="form-control" name="code" placeholder="在此填入未压缩的代码..." rows="20" required></textarea>
@@ -45,7 +45,7 @@
                             <p>使用手册：</p>
                         </div>
                         <div class="col-sm-6">
-                            <h5 class="m-t-none m-b">压缩后的代码</h5>
+                            <h3 class="m-t-none m-b">压缩后的代码</h3>
                             <div class="text-center">
                                 <div class="form-group row">
                                     <textarea class="form-control" id="preview_string" placeholder="压缩后的代码..." rows="20"></textarea>
@@ -58,6 +58,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 @endsection

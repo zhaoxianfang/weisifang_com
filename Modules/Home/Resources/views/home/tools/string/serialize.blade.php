@@ -16,55 +16,33 @@
 
 <!-- 页面内容 -->
 @section('content')
-
-
-    <div class="wrapper wrapper-content  animated fadeInRight article">
-
-        <!-- <div class="row justify-content-md-center">
-        </div> -->
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h1>系列化和反系列化 <small>serialize、unserialize</small></h1>
-                        <div class="ibox-tools">
-                            <!-- <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a> -->
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" class="dropdown-item">Config option 1</a>
-                                </li>
-                                <li><a href="#" class="dropdown-item">Config option 2</a>
-                                </li>
-                            </ul>
-                            <!-- <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a> -->
-                        </div>
+<div class="article">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h1>系列化和反系列化 <small>serialize、unserialize</small></h1>
+                    <div class="ibox-tools">
+                        <span class="label label-warning-light float-right">:)</span>
                     </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-6 b-r">
-                                <h3 class="m-t-none m-b">系列化或反系列化前的代码：</h3>
-                                <form role="form" method="post">
-                                    <div class="form-group row">
-                                        <textarea class="form-control" name="code" placeholder="系列化或反系列化前的字符串..." rows="20" required></textarea>
-                                    </div>
-
-                                    <div>
-                                        <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> 系列化/反系列化</button>
-                                    </div>
-                                </form>
-
-                                <p>使用手册：</p>
-
-                            </div>
-                            <div class="col-sm-6">
-                                <h3 class="m-t-none m-b">转换结果:</h3>
+                </div>
+                <div class="ibox-content" style="padding: 0 20px;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="m-t-none m-b">系列化或反系列化前的代码：</h3>
+                            <form role="form" method="post">
+                                <div class="form-group row">
+                                    <textarea class="form-control" name="code" placeholder="系列化或反系列化前的字符串..." rows="20" required></textarea>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> 系列化/反系列化</button>
+                                </div>
+                            </form>
+                            <p>使用手册：</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3 class="m-t-none m-b">转换结果</h3>
+                            <div class="text-center">
                                 <div class="form-group row">
                                     <textarea class="form-control" id="preview_string" placeholder="转换后的结果..." rows="20"></textarea>
                                 </div>
@@ -73,18 +51,15 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
-
     </div>
+</div>
 
 @endsection
 
 
 @section('page_js')
     <!-- 页面中引入page js -->
-
 
     <script type="text/javascript">
 
@@ -94,9 +69,17 @@
             // $('#compressor_res_box').hide()
         }
         function form_after(res) {
-            $('#preview_string').val(res.data.result);
+            if(res.data.fn === "serialize"){
+                $('#preview_string').val(res.data.result);
+            }else{
+                let str = my.formatJson(res.data.result);
+                if(str.substr(0, 11) === "json数据格式有误:"){
+                    $('#preview_string').val(res.data.result);
+                }else{
+                    $('#preview_string').val(str);
+                }
+            }
         }
-
 
     </script>
 @endsection

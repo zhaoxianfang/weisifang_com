@@ -20,78 +20,41 @@
 
 <!-- 页面内容 -->
 @section('content')
-
-
-        <div class="wrapper wrapper-content  animated fadeInRight article">
-
-            <!-- <div class="row justify-content-md-center">
-            </div> -->
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h1>Unicode转码 <small>Unicode encoding conversion</small></h1>
-                            <div class="ibox-tools">
-                                <!-- <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a> -->
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <!-- <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a> -->
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-sm-6 b-r">
-                                    <h3 class="m-t-none m-b">Unicode转中文汉字、ASCII转换Unicode ：</h3>
-
-
-                                    <!-- <form role="form" method="post" class="unbind-form" > -->
-                                    <div role="form" method="post" class="unbind-form" >
-
-
-                                       <div class="form-group row">
-                                            <textarea class="form-control" id="json_old_str" name="code" placeholder="在此填入unicode字符串" rows="20" required></textarea>
-                                        </div>
-
-                                        <!-- <div>
-                                            <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> &nbsp;&nbsp; 格式化</button>
-                                        </div> -->
-                                    <!-- </form> -->
-                                    </div>
-
-                                    <p>使用手册：</p>
-
+<div class="article">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h1>Unicode转换 <small>Unicode encoding conversion</small></h1>
+                    <div class="ibox-tools">
+                        <span class="label label-warning-light float-right">:)</span>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="m-t-none m-b">Unicode转中文汉字、ASCII转换Unicode ：</h3>
+                            <div role="form" method="post" class="unbind-form" >
+                                <div class="form-group row">
+                                    <textarea class="form-control" id="json_old_str" name="code" placeholder="此处填入unicode字符串" rows="20" required></textarea>
                                 </div>
-                                <div class="col-sm-6">
-                                    <h3 class="m-t-none m-b">汉字转Unicode：</h3>
-                                    <p class="text-center">
-
-                                        <div class="form-group row">
-                                            <textarea class="form-control" id="preview_string" placeholder="转换后的字符串" rows="20"></textarea>
-                                        </div>
-
-                                    </p>
+                            </div>
+                            <p>使用说明：在左侧输入区填写 Unicode 字符串 或 在右侧填写汉字字符串 都会自动完成转换！</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3 class="m-t-none m-b">汉字转Unicode：</h3>
+                            <div class="text-center">
+                                <div class="form-group row">
+                                    <textarea class="form-control" id="preview_string" placeholder="此处填入汉字或其他普通字符串" rows="20"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
+    </div>
+</div>
 
 @endsection
 
@@ -104,17 +67,16 @@
 
     // Unicode转中文汉字、ASCII转换Unicode
     function reconvert(str){
-            str = str.replace(/(\\u)(\w{1,4})/gi,function($0){
-                return (String.fromCharCode(parseInt((escape($0).replace(/(%5Cu)(\w{1,4})/g,"$2")),16)));
-            });
-            str = str.replace(/(&#x)(\w{1,4});/gi,function($0){
-                return String.fromCharCode(parseInt(escape($0).replace(/(%26%23x)(\w{1,4})(%3B)/g,"$2"),16));
-            });
-            str = str.replace(/(&#)(\d{1,6});/gi,function($0){
-                return String.fromCharCode(parseInt(escape($0).replace(/(%26%23)(\d{1,6})(%3B)/g,"$2")));
-            });
-
-            return str;
+        str = str.replace(/(\\u)(\w{1,4})/gi,function($0){
+            return (String.fromCharCode(parseInt((escape($0).replace(/(%5Cu)(\w{1,4})/g,"$2")),16)));
+        });
+        str = str.replace(/(&#x)(\w{1,4});/gi,function($0){
+            return String.fromCharCode(parseInt(escape($0).replace(/(%26%23x)(\w{1,4})(%3B)/g,"$2"),16));
+        });
+        str = str.replace(/(&#)(\d{1,6});/gi,function($0){
+            return String.fromCharCode(parseInt(escape($0).replace(/(%26%23)(\d{1,6})(%3B)/g,"$2")));
+        });
+        return str;
     }
     // unicode 转中文
     function toZhCN(str) {
@@ -143,10 +105,6 @@
             $('#json_old_str').val('');
           };
         });
-
-
     });
-
-
 </script>
 @endsection

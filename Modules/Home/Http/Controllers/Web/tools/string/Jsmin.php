@@ -13,7 +13,7 @@ class Jsmin extends HomeBase
         if ($this->request->isMethod('post')) {
             $codeString = $this->request->input('code');
             if (!$codeString) {
-                return $this->error('请填入需要压缩的代码', 412);
+                $this->error('请填入需要压缩的代码', 412);
             }
             $minifiedCode = CodeMin::minify($codeString);
             return $this->success(['min_str' => $minifiedCode], '转换成功', 200);

@@ -89,6 +89,11 @@ composer install --ignore-platform-req=ext-sodium --ignore-platform-req=ext-sodi
 16、composer config -l -g 查看所有全局配置
 ```
 
+### 如何安装和更新包
+本地没有有 `vendor` 文件夹时(初次执行时) 需要执行 `composer install` 会生成composer.lock
+新增修改了依赖包[本地已经有 `vendor` 文件夹时(已有`composer.lock`)] 需要执行 `composer update` 来跟新 `composer.json` 并重新生成`composer.lock`
+
+
 默认地址改为中国镜像地址：
 
 ```

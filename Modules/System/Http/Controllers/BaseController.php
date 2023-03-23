@@ -30,11 +30,11 @@ class BaseController extends Controller
 
     public function json($data = [], $status = 200)
     {
-        return response()->json($data, $status);
+        return response()->json($data, $status)->send();
     }
 
     public function api_json($data = [], $code = 200, $message = '成功', $status = 200)
     {
-        return response()->json(compact('code', 'message', 'data'), $status);
+        return response()->json(compact('code', 'message', 'data'), $status)->send();
     }
 }

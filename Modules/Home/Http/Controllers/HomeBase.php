@@ -10,17 +10,17 @@ use Modules\System\Services\WebTopNavService;
 
 class HomeBase extends WebBaseController
 {
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
+//    public function __construct(Request $request)
+//    {
+//        parent::__construct($request);
+//
 //        View::share('list', []);
 //        View::share('bread_crumb', '');
 //
 //        $artClassify = ArticleClassifies::open()->get()->toArray();
 //        // 设置top菜单目录
 //        WebTopNavService::instance()->renderMenu($artClassify, 'name', '/blog/c');
-
-    }
+//
+//    }
 
 }

@@ -22,15 +22,11 @@
 @section('content')
 
 
-        <div class="wrapper wrapper-content  animated fadeInRight article">
-
-            <!-- <div class="row justify-content-md-center">
-            </div> -->
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
+    <div class="article">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
                             <h1>HTML、JS、CSS代码压缩 <small>Code compression</small></h1>
                             <div class="ibox-tools">
                                 <!-- <a class="collapse-link">
@@ -50,46 +46,34 @@
                                 </a> -->
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-sm-6 b-r">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-6 b-r">
                                     <h3 class="m-t-none m-b">原代码：</h3>
-
-
                                     <form role="form" method="post">
-
-
                                        <div class="form-group row">
                                             <textarea class="form-control" name="code" placeholder="在此填入未压缩的代码..." rows="20" required></textarea>
                                         </div>
-
                                         <div>
                                             <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> &nbsp;&nbsp; 压缩</button>
                                         </div>
                                     </form>
-
                                     <p>使用手册：</p>
-
                                 </div>
-                                <div class="col-sm-6">
-                                    <h3 class="m-t-none m-b">压缩后的代码</h3>
-                                    <p class="text-center">
-
-                                        <div class="form-group row">
-                                            <textarea class="form-control" id="preview_string" placeholder="压缩后的代码..." rows="20"></textarea>
-                                        </div>
-
-                                    </p>
+                            <div class="col-sm-6">
+                                <h3 class="m-t-none m-b">压缩后的代码</h3>
+                                <div class="text-center">
+                                    <div class="form-group row">
+                                        <textarea class="form-control" id="preview_string" placeholder="压缩后的代码..." rows="20"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
+    </div>
 
 @endsection
 

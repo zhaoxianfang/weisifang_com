@@ -73,15 +73,6 @@
                                             <li>
                                                 <a class="dropdown-item" href="/tools/string/serialize">系列化和反系列化</a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">时间戳</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">随机密码生成</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">...</a>
-                                            </li>
                                         </ul>
                                     </div>
 
@@ -103,9 +94,6 @@
                                             <li>
                                                 <a class="dropdown-item" href="/tools/images/ico">favicon.ico制作</a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">...</a>
-                                            </li>
                                         </ul>
                                     </div>
 
@@ -115,13 +103,6 @@
                                             <li>
                                                 <a class="dropdown-item" href="/tools/mysql/dictionary">MysqlTool 生成数据库字典</a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">文字转拼音</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0);">...</a>
-                                            </li>
-
                                         </ul>
                                     </div>
                                 </div>

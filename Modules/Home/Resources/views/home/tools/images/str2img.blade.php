@@ -22,43 +22,18 @@
 @section('content')
 
 
-        <div class="wrapper wrapper-content  animated fadeInRight article">
-
-            <!-- <div class="row justify-content-md-center">
-            </div> -->
-
-            <div class="row">
-                <div class="col-lg-12">
+    <div class="article">
+        <div class="row">
+            <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h1>字符串生成图片 <small>Generate pictures with strings</small></h1>
-                            <div class="ibox-tools">
-                                <!-- <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a> -->
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <!-- <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a> -->
-                            </div>
                         </div>
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-sm-6 b-r">
                                     <h3 class="m-t-none m-b">参数设置：</h3>
-
-
                                     <form role="form" name="str_to_img" class="unbind-form" method="post" onsubmit="return createImg()">
-
-
                                        <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">图片内容</label>
                                             <div class="col-lg-10">
@@ -69,11 +44,9 @@
                                             </div>
                                         </div>
 
-
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">指定宽高<br /></label>
                                             <div class="col-lg-5">
-
                                                 <input class="touchspin_input" type="text" value="500" name="width">
                                                 <div class="m-b-sm">
                                                     <small ><strong>提示:</strong>指定宽度(px)  </small>
@@ -107,11 +80,12 @@
                                             <label class="col-lg-2 col-form-label">文字字体</label>
                                             <div class="col-lg-10">
                                                 <select class="select2_font form-control" name="font">
+                                                    <option value="a_kspy">Aa楷书拼音</option>
                                                     <option value="yuanti">圆体</option>
                                                     <option value="diandain">点点像素体-方形</option>
                                                     <option value="diandain_yt">点点像素体-圆形</option>
                                                     <option value="diandain_lx">点点像素体-菱形</option>
-                                                    <option value="lishu" selected="">隶书</option>
+                                                    <option value="lishu" selected>隶书</option>
                                                     <option value="qiuhong">秋鸿楷体</option>
                                                     <option value="taiwan_lishu">台湾隶书</option>
                                                     <option value="xingshu">行书</option>
@@ -131,7 +105,6 @@
                                                     <option value="sj_sjjt">三极瘦金简体</option>
                                                     <option value="sh_jjt">三极尖叫体</option>
                                                     <option value="sj_qyxz">三极秦韵小篆</option>
-                                                    <option value="a_kspy">Aa楷书拼音</option>
                                                     <option value="fzkt">方正楷体</option>
                                                     <option value="sj_kdt">三极空叠体</option>
                                                     <option value="sj_ltjhjt">三极立体极黑简体</option>
@@ -196,11 +169,8 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-
         </div>
+    </div>
 
 @endsection
 
@@ -217,56 +187,53 @@
     <script src="{{ asset('static/inspinia/js/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
     <!-- TouchSpin -->
     <script src="{{ asset('static/inspinia/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
 
         $(".dial").knob();
 
         $('.color_plugins').colorpicker();
 
         $(".select2_font").select2({
-                theme: 'bootstrap4',
-                placeholder: "请选择一种字体",
-                // allowClear: true
+            theme: 'bootstrap4',
+            placeholder: "请选择一种字体",
+            // allowClear: true
         });
 
         $(".touchspin_input").TouchSpin({
-                min: 0,
-                max: 3000,
-                step: 1,
-                decimals: 0, // 小数点
-                boostat: 5,
-                maxboostedstep: 10,
-                postfix: 'px',
-                buttondown_class: 'btn btn-white',
-                buttonup_class: 'btn btn-white'
-            });
+            min: 0,
+            max: 3000,
+            step: 1,
+            decimals: 0, // 小数点
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: 'px',
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
 
         function createImg(e) {
             $('#preview_img').attr("src",'');
-             // document.forms["str_to_img"]["fname"].value + "!"
-             console.log(e)
-             var text = document.forms["str_to_img"]['text'].value || 'hello';
-             var width = document.forms["str_to_img"]['width'].value;
-             var height = document.forms["str_to_img"]['height'].value;
-             var color = (document.forms["str_to_img"]['color'].value).substr(1);
-             var bg_color = (document.forms["str_to_img"]['bg_color'].value).substr(1);
-             var font = document.forms["str_to_img"]['font'].value;
-             var rotate = document.forms["str_to_img"]['rotate'].value;
-             var allow_wrap = document.forms["str_to_img"]['allow_wrap'].value;
+            // document.forms["str_to_img"]["fname"].value + "!"
+            var text = document.forms["str_to_img"]['text'].value || 'hello';
+            var width = document.forms["str_to_img"]['width'].value;
+            var height = document.forms["str_to_img"]['height'].value;
+            var color = (document.forms["str_to_img"]['color'].value).substr(1);
+            var bg_color = (document.forms["str_to_img"]['bg_color'].value).substr(1);
+            var font = document.forms["str_to_img"]['font'].value;
+            var rotate = document.forms["str_to_img"]['rotate'].value;
+            var allow_wrap = document.forms["str_to_img"]['allow_wrap'].value;
 
-             // console.log(document.forms["str_to_img"])
+            // console.log(document.forms["str_to_img"])
 
-             let protocol = window.location.protocol, host = window.location.host;
-             let url_domain = `${protocol}//${host}`;
+            let protocol = window.location.protocol, host = window.location.host;
+            let url_domain = `${protocol}//${host}`;
 
+            var url = url_domain+'/tools/text2png/'+text+'/'+width+'/'+height+'/'+color+'/'+bg_color+'/'+rotate+'/'+font+'/'+allow_wrap+'.html';
 
-             var url = url_domain+'/tools/text2png/'+text+'/'+width+'/'+height+'/'+color+'/'+bg_color+'/'+rotate+'/'+font+'/'+allow_wrap+'.html';
-             console.log(url)
-             $('#images_none').hide()
-                $('#compressor_res_box').show()
-                $('#preview_img').attr("src",url);
-
-             return false
+            $('#images_none').hide()
+            $('#compressor_res_box').show()
+            $('#preview_img').attr("src",url);
+            return false
         }
         function form_before(res) {
             $('#images_none').show()
@@ -282,6 +249,5 @@
         }
         $('#compressor_res_box').show()
 
-
-</script>
+    </script>
 @endsection

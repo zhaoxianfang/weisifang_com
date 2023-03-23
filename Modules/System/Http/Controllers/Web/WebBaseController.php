@@ -12,10 +12,11 @@ class WebBaseController extends BaseController
      * 手动抛出异常
      *
      * @param string $message
+     * @param int    $code
      *
      * @throws \Exception
      */
-    public function error($message = '出错啦！', $code = 500)
+    public function error(string $message = '出错啦！', int $code = 500)
     {
         throw new \Exception($message, $code);
     }
@@ -26,10 +27,12 @@ class WebBaseController extends BaseController
      * @param array  $data
      * @param string $message
      * @param int    $code
+     * @param string $url
+     * @param int    $wait
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function success($data = [], $message = '成功', $code = 200, $url = '', $wait = 3)
+    public function success(array $data = [], string $message = '成功', int $code = 200, string $url = '', int $wait = 3)
     {
         return response()->json(compact('code', 'message', 'url', 'wait', 'data'), $code);
     }
@@ -50,7 +53,7 @@ class WebBaseController extends BaseController
     /**
      * 检查是否登录 web,如果已经登录则返回 true
      *
-     * @return bool|\Illuminate\Http\Response
+     * @return bool|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function checkLogin()
     {
@@ -97,7 +100,7 @@ class WebBaseController extends BaseController
      * @param string $message 提示文字
      * @param string $type    类型 success|error|info|warning
      */
-    public function tipsPage($message = '操作成功', $type = 'success')
+    public function tipsPage(string $message = '操作成功', string $type = 'success')
     {
         return die(view('system::other/tips', [
             'type'    => $type ?? 'success',

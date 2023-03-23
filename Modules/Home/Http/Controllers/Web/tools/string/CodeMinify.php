@@ -13,7 +13,7 @@ class CodeMinify extends HomeBase
         if ($this->request->isMethod('post')) {
             $codeString = $this->request->input('code');
             if (empty($codeString)) {
-                return $this->error('请填入需要压缩的代码', 412);
+                $this->error('请填入需要压缩的代码', 412);
             }
             // 压缩css , 也可以压缩js
             $minifier     = new min\CSS($codeString);
