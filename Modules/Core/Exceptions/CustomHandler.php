@@ -5,7 +5,8 @@ namespace Modules\Core\Exceptions;
 use App\Exceptions\Handler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Modules\Core\Entities\SystemLog;
+use Modules\Logs\Entities\SystemLog;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use function config;
 use function response;
@@ -123,6 +124,8 @@ class CustomHandler extends Handler
                 // "传递路线"    => $e->getTraceAsString(),      //返回发生异常的传递路线
             ], $userId, [], SystemLog::LEVEL_ERROR);
         } catch (\Exception $err) {
+            // 写入本地文件日志
+            Log::error($err->getMessage());
         }
 
         // 判断异常是否需要自定义报告...

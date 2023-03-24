@@ -14,6 +14,8 @@ class TestController extends Controller
      */
     public function index()
     {
+        // 写入默认日志通道
+        // \Illuminate\Support\Facades\Log::error('===== test log =====');
         return view('test::index');
     }
 

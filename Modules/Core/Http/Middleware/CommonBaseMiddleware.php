@@ -5,7 +5,7 @@ namespace Modules\Core\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Modules\Core\Entities\SystemLog;
+use Modules\Logs\Entities\SystemLog;
 use function config;
 
 class CommonBaseMiddleware
