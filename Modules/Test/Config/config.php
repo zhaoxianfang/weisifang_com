@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Test'
+    'name' => 'Test 测试模块'
 ];

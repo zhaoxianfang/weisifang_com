@@ -23,7 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class, // <------ 处理session Session store not set on request.
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Modules\System\Http\Middleware\CommonBaseMiddleware::class, // 基础公共中间件
+        \Modules\Core\Http\Middleware\CommonBaseMiddleware::class, // 基础公共中间件
     ];
 
     /**
@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Modules\System\Http\Middleware\AdminAuthPrivilege::class,
+            \Modules\Core\Http\Middleware\AdminAuthPrivilege::class,
         ],
 
         'api' => [

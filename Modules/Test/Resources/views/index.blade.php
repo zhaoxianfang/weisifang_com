@@ -1,9 +1,17 @@
 @extends('test::layouts.master')
 
 @section('content')
-    <h1>Hello World</h1>
+    <h1>TEST</h1>
 
     <p>
-        This view is loaded from module: {!! config('test.name') !!}
+        此视图是从【{!! config('test.name') !!}】模块加载的
+    </p>
+
+    <p>
+        测试语言本地化 lang: {{ __('hello') }}
+    </p>
+
+    <p>
+        测试语言本地化 lang: {{ __('test::test.hello', ['name' => 'dayle'])  }}
     </p>
 @endsection

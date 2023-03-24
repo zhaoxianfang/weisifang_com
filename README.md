@@ -67,7 +67,7 @@ php artisan vendor:publish --tag=laravel-errors
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     // App\Exceptions\Handler::class
-    \Modules\System\Exceptions\CustomHandler::class // 自定义接管系统异常
+    \Modules\Core\Exceptions\CustomHandler::class // 自定义接管系统异常
 );
 ```
 

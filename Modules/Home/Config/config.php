@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Home'
+    'name' => 'Home 站点门面模块',
 ];

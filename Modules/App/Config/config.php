@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'App'
+    'name' => '移动端App模块'
 ];

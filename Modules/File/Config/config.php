@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'File'
+    'name' => 'File 文件管理系统模块'
 ];

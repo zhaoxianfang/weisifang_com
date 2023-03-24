@@ -93,7 +93,8 @@ composer install --ignore-platform-req=ext-sodium --ignore-platform-req=ext-sodi
 
 ### 如何安装和更新包
 
-本地没有有 `vendor` 文件夹时(初次执行时) 需要执行 `composer install` 会生成composer.lock 新增修改了依赖包[本地已经有 `vendor` 文件夹时(已有`composer.lock`)]
+本地没有有 `vendor` 文件夹时(初次执行时) 需要执行 `composer install` 会生成composer.lock
+新增修改了依赖包[本地已经有 `vendor` 文件夹时(已有`composer.lock`)]
 需要执行 `composer update` 来跟新 `composer.json` 并重新生成`composer.lock`
 
 默认地址改为中国镜像地址：
@@ -345,10 +346,37 @@ git config core.filemode false
 git config --global core.filemode false
 ```
 
-laravel file_put_contents(xxxx): Failed to open stream: Permission denied 解决(直接给文件夹设置777权限)：chmod -R 777 xxx/
+laravel file_put_contents(xxxx): Failed to open stream: Permission denied 解决(直接给文件夹设置777权限)：chmod -R 777
+xxx/
 
 ## 其他
 
 composer总结 https://zhuanlan.zhihu.com/p/569760310
 PHP基础知识 - PHP函数大全 https://blog.csdn.net/qq_35453862/article/details/125874242
 PHP 函数的完整参考手册 https://blog.csdn.net/Fancie_Wong/article/details/53007273
+
+## 如何使用语言本地化
+
+在`config/app.php`中配置 中文语言包
+
+```
+'locale' => 'zh-CN',
+```
+
+### 在Test 模块中定义语言包
+
+`Modules/Test/Resources/lang` 文件夹下配置
+> zh-CN.json 文件 和 zh-CN 文件夹方式可以任选其一或者都使用
+
+```
+zh-CN.json
+// 内容：{ "hello": "您好 by zh-CN.json" }  
+// 调用：{{ __('hello') }}
+//      echo __('hello');
+
+zh-CN/abc.php
+// 内容：return [ 'hello' => '您好 by zh-CN/abc.php', 'welcome' => 'Welcome, :name' ]; 
+// 调用：{{ __('test::abc.hello')  }} 
+//      {{ __('test::abc.welcome', ['name' => '张三'])  }}
+```
+

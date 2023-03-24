@@ -30,6 +30,7 @@ yarn-error.log
 .*/
 # 忽略所有 . 开头的文件
 .*
+!.gitkeep
 
 !.gitignore
 # 忽略符号链接文件夹images

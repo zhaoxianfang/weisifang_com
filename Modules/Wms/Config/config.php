@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Wms'
+    'name' => 'Wms 仓库管理',
 ];

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Spider'
+    'name' => 'Spider 网络爬虫模块',
 ];

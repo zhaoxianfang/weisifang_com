@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Docs'
+    'name' => 'Docs 文档系统模块'
 ];

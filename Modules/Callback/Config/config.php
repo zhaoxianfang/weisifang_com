@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Callback'
+    'name' => 'Callback 第三方回调模块'
 ];
