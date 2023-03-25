@@ -9816,3 +9816,15 @@ body.md-skin {
     margin: 0;
   }
 }
+.admin-user-dropdown{
+    margin-top: -12px;
+    padding-bottom: 14px!important;
+}
+.admin-user-dropdown img{
+    height: 30px!important;
+}
+@media (max-width: 768px) {
+    .admin-user-dropdown{
+        padding-bottom: 2px!important;
+    }
+}

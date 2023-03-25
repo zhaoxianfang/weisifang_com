@@ -15,8 +15,20 @@ class CodeMinify extends HomeBase
             if (empty($codeString)) {
                 $this->error('请填入需要压缩的代码', 412);
             }
-            // 压缩css , 也可以压缩js
-            $minifier     = new min\CSS($codeString);
+            // 判断是js 还是css,通过定义变量的方式来区分
+            if (
+                stripos($codeString, " var ") !== false
+                || stripos($codeString, " let ") !== false
+                || stripos($codeString, " const ") !== false
+                || stripos($codeString, "=") !== false
+            ) {
+                // 压缩js
+                $minifier = new min\JS($codeString);
+            } else {
+                // 压缩css
+                $minifier = new min\CSS($codeString);
+            }
+
             $minifiedCode = $minifier->minify();
 
             $oldLen      = mb_strlen($codeString);

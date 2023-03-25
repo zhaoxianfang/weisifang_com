@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,47 +13,44 @@
         <title>{{ $sys['name']??'威四方' }}</title>
     @endif
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-    <meta name="author" content="威四方" />
-    <meta name="Copyright" content="威四方" />
-
-    <meta name="keywords" content="威四方,weisifang,wsf,在线文档,企业服务,办公系统,photo,在线相册,仓库管理系统,OA,企业办公系统,CRM,客户关系管理,项目承接,ERP,企业资源计划,SCM,供应链管理系统,SRM,供应商关系管理,管理系统">
-    <meta name="description" content="威四方是一个提供客户关系管理系统(CRM)、仓库管理系统(WMS)、采购系统(SRM)、在线文档(DOCS)，在线相册(PHOTOS)、企业办公系统(OA)、在线工具(tools)等的综合性服务平台;客户满意，服务至上。">
-
     <link href="{{ asset('static/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/inspinia/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('static/inspinia/css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/inspinia/css/style.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('static/inspinia/css/adminlte_nav.min.css') }}" rel="stylesheet">
 
     @section('head_css')
         <!-- 页面中引入page css -->
     @show
 </head>
 
-<body class="top-navigation">
+<body>
 
 <div id="wrapper">
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom white-bg">
-            @include('home::layouts.home.top_nav')
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            @include('admin::layouts.admin.left_metis_menu')
         </div>
-        <div class="wrapper-0 wrapper-content-0 animated fadeInRight">
-            <div class="container">
-                @yield('content')
-            </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="border-bottom">
+            @include('admin::layouts.admin.top_nav')
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            @yield('content')
         </div>
         <div class="footer">
             <div class="float-right">
-                <a href="https://beian.miit.gov.cn/#" target="_blank" style="color: #676a6c;"> <strong>{{ empty( $sys['beian'] ) ? '滇ICP备16003347号-2': $sys['beian'] }}&nbsp;</strong></a>
+                10GB of <strong>250GB</strong> Free.
             </div>
             <div>
                 <strong>Copyright</strong> {{ empty( $sys['name'] ) ? '威四方': $sys['name'] }}  &copy; 2023-<script>document.write(new Date().getFullYear())</script>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -66,12 +65,6 @@
 <script src="{{ asset('static/inspinia/js/inspinia.min.js') }}"></script>
 <script src="{{ asset('static/inspinia/js/plugins/pace/pace.min.js') }}"></script>
 
-<script src="{{ asset('static/inspinia/js/top-nav.js') }}"></script>
-
-<script src="{{ asset('static/libs/layer-3.5.1/layer.js') }}"></script>
-
-<script src="{{ asset('static/libs/zxf/js/my.min.js') }}" my-init='true'></script>
-
 @section('page_js')
     <!-- 页面中引入page js -->
 @show
@@ -81,7 +74,6 @@
 
     });
 </script>
-
 </body>
 
 </html>
