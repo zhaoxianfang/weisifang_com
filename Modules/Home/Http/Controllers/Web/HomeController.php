@@ -17,6 +17,11 @@ class HomeController extends Controller
         return view('home::index');
     }
 
+    public function testDocs()
+    {
+        return view('home::test');
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
