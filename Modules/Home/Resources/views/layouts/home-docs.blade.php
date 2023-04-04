@@ -26,6 +26,7 @@
     <link href="{{ asset('static/inspinia/css/style.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('static/inspinia/css/adminlte_nav.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/inspinia/css/home-docs-menu.min.css') }}" rel="stylesheet">
 
     @section('head_css')
         <!-- 页面中引入page css -->
@@ -39,9 +40,17 @@
         <div class="row border-bottom white-bg">
             @include('home::layouts.home.top_nav')
         </div>
-        <div class="wrapper-0 wrapper-content-0 animated fadeInRight">
+        <div class="animated fadeInRight">
             <div class="container">
-                @yield('content')
+                <div class="docs-box docs-left-show-menu">
+                    <div class="docs-left-menu">
+                        @include('home::layouts.home-docs.left-menu')
+                    </div>
+                    <button type="button" class="show-menu docs-menu-btn-nav"></button>
+                    <div class="docs-right-content">
+                        @yield('content')
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">
@@ -71,6 +80,7 @@
 <script src="{{ asset('static/libs/layer-3.5.1/layer.js') }}"></script>
 
 <script src="{{ asset('static/libs/zxf/js/my.min.js') }}" my-init='true'></script>
+<script src="{{ asset('static/inspinia/js/home-docs-menu.min.js') }}"></script>
 
 @section('page_js')
     <!-- 页面中引入page js -->
