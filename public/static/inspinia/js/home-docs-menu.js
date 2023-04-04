@@ -1,5 +1,5 @@
-$(document).ready(function () {
 
+$(function(){
     $(".docs-menu-box a").siblings("ul.submenu").each(function(index, domele) {
         // 追加一个有子元素的箭头元素
         $(domele).siblings("a").append('<span class="custom-arrow custom-right-arrow"></span>');
@@ -11,7 +11,11 @@ $(document).ready(function () {
             var submenuShow = submenu.css("display");
             // submenu.css("display", submenuShow == "block" ? "none" : "block");
             // 展开收起效果
-            submenuShow === "block"? $(submenu).slideUp(600):$(submenu).slideDown(600);
+            if(submenuShow === "block"){
+                $(submenu).slideUp(600);
+            }else{
+                $(submenu).slideDown(600);
+            }
 
             if (submenuShow === "block") {
                 $(this).find(".custom-arrow").removeClass("custom-down-arrow");
@@ -44,4 +48,4 @@ $(document).ready(function () {
         })
     }
     bindClickDocsMenu();
-});
+})
