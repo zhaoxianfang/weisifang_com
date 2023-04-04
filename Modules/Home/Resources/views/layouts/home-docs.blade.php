@@ -40,7 +40,7 @@
         <div class="row border-bottom white-bg">
             @include('home::layouts.home.top_nav')
         </div>
-        <div class="animated fadeInRight">
+        <div class="docs-page-content animated fadeInRight">
             <div class="container">
                 <div class="docs-box docs-left-show-menu">
                     <div class="docs-left-menu">

@@ -203,12 +203,6 @@
     height: calc(100vh - 102px);
     overflow: auto;
     position: relative;
-
-    -webkit-overflow-scrolling: touch; /* 提高 iOS 滑动性能 */
-}
-
-.docs-box::-webkit-scrollbar {
-    display: none; /* 隐藏滚动条 */
 }
 
 .docs-left-menu {
@@ -270,7 +264,18 @@
     padding: 0 20px;
     margin: 10px 0;
     background-color: #fff;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; /* 提高 iOS 滑动性能 */
 }
+.docs-right-content::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+}
+.docs-right-content::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
 
 .docs-menu-btn-nav.show-menu {
     background-image: url('../img/nuv_03.png');
