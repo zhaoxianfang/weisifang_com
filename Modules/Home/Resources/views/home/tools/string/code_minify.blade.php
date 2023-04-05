@@ -33,16 +33,23 @@
                 <div class="ibox-content" style="padding: 0 20px;">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="m-t-none m-b">原代码：</h3>
+                            <h3 class="m-t-none m-b">原代码：
+                                <select class="form-control" id="code_type_select" style="width: 150px;float: right;margin-right: -15px;">
+                                    <option value="js" >JS 代码</option>
+                                    <option value="css" >CSS代码</option>
+                                    <option value="auto" >自动识别</option>
+                                </select>
+                            </h3>
                             <form role="form" method="post">
+                                <input type="hidden" name="code_type" value="auto" id="code_type">
                                 <div class="form-group row">
                                     <textarea class="form-control" name="code" placeholder="在此填入未压缩的代码..." rows="20" required></textarea>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> &nbsp&nbsp; 开始压缩</button>
+                                    <button type="submit" class="btn btn-success dim btn-block" id="submit_btn"><i class="fa fa-suitcase"></i> &nbsp&nbsp; 开始压缩</button>
                                 </div>
                             </form>
-                            <p>使用手册：</p>
+                            <p>使用说明：将你的<code>js</code> 或 <code>css</code> 代码放在左侧输入框中，然后点击「开始压缩」按钮进行压缩。</p>
                         </div>
                         <div class="col-sm-6">
                             <h3 class="m-t-none m-b">压缩后的代码</h3>
@@ -74,8 +81,11 @@
             // console.log(res)
             // $('#images_none').show()
             // $('#compressor_res_box').hide()
+            $('code_type').val($('code_type_select').val());
+            $('#submit_btn').attr("disabled",true).html('<i class="fa fa-spinner"></i> &nbsp&nbsp; 正在压缩中...');
         }
         function form_after(res) {
+            $('#submit_btn').attr("disabled",false).html('<i class="fa fa-suitcase"></i> &nbsp&nbsp; 开始压缩');
             $('#preview_string').val(res.data.min_str);
             $('#minify_ratio').text(res.data.minify_ratio);
         }

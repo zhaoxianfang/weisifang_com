@@ -1,4 +1,4 @@
-
+// docs
 $(function(){
     $(".docs-menu-box a").siblings("ul.submenu").each(function(index, domele) {
         // 追加一个有子元素的箭头元素
@@ -49,12 +49,10 @@ $(function(){
     }
     bindClickDocsMenu();
 
-
     // 使用 .container 或 .docs-page-content元素滚动事件触发到 .docs-right-content 上
     $(document).on("mousewheel DOMMouseScroll", function (event) {
         for (const i in event.target.classList) {
             if(['container','docs-page-content'].includes(event.target.classList[i])){
-                // console.log( $(this).scrollTop() );
                 var targetDom = $(".docs-right-content");
                 var scroll_top = targetDom.scrollTop();
                 if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
@@ -64,7 +62,5 @@ $(function(){
                 }
             }
         }
-        event.preventDefault();
-        return false;
     });
 })
