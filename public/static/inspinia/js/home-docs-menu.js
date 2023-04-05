@@ -52,7 +52,8 @@ $(function () {
 
     // 使用 .container 或 .docs-page-content元素滚动事件触发到 .docs-right-content 上
     $(document).on("mousewheel DOMMouseScroll", function (event) {
-        if ((event.target.classList).includes("bind-scroll-to-content")) {
+        let classList = event.target.className.split(/\s+/);
+        if (classList.includes("bind-scroll-to-content")) {
             var targetDom = $(".docs-right-content");
             var scroll_top = targetDom.scrollTop();
             if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
