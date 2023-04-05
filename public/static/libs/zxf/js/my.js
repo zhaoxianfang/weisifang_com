@@ -123,7 +123,7 @@
             if (validate === false) {
                 return false;
             }
-            var index = layer.msg("正在处理中……", 0);
+            var index = layer.msg("请稍后……", 0);
             my.ajax(form_url, formdata, function (succ) {
                 //返回数据 非200：失败 ；200：成功
                 if (succ.code === 200) {
@@ -736,7 +736,7 @@
                 }
             }
             $.ajax({
-                async: false,
+                async: true,
                 cache: false,
                 url: url,
                 type: reqtype,

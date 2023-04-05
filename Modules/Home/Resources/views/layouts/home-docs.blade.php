@@ -40,8 +40,8 @@
         <div class="row border-bottom white-bg">
             @include('home::layouts.home.top_nav')
         </div>
-        <div class="roll-event-content animated fadeInRight">
-            <div class="container roll-event-content">
+        <div class="bind-scroll-to-content animated fadeInRight">
+            <div class="container bind-scroll-to-content">
                 <div class="docs-box docs-left-show-menu">
                     <div class="docs-left-menu">
                         @include('home::layouts.home-docs.left-menu')
