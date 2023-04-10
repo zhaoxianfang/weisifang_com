@@ -4,6 +4,7 @@
         Header
     </div>
     <ul>
+        {!! empty($left_menu_str)?'':$left_menu_str !!}
         <li class="active">
             <a href="#">
                 Home
