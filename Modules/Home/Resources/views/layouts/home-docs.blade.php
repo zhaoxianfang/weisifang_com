@@ -26,7 +26,7 @@
     <link href="{{ asset('static/inspinia/css/style.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('static/inspinia/css/adminlte_nav.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('static/inspinia/css/home-docs-menu.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/inspinia/css/home-docs-menu.css') }}" rel="stylesheet">
 
     @section('head_css')
         <!-- 页面中引入page css -->
@@ -42,7 +42,7 @@
         </div>
         <div class="bind-scroll-to-content animated fadeInRight">
             <div class="container bind-scroll-to-content">
-                <div class="docs-box docs-left-show-menu">
+                <div class="docs-box container docs-left-show-menu">
                     <div class="docs-left-menu">
                         @include('home::layouts.home-docs.left-menu')
                     </div>
@@ -80,7 +80,7 @@
 <script src="{{ asset('static/libs/layer-3.5.1/layer.js') }}"></script>
 
 <script src="{{ asset('static/libs/zxf/js/my.min.js') }}" my-init='true'></script>
-<script src="{{ asset('static/inspinia/js/home-docs-menu.min.js') }}"></script>
+<script src="{{ asset('static/inspinia/js/home-docs-menu.js') }}"></script>
 
 @section('page_js')
     <!-- 页面中引入page js -->

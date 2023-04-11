@@ -131,7 +131,7 @@
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-0 ml-md-3  unbind-form" action="/search"  method="get">
+            <form class="form-inline ml-0 ml-md-3  unbind-form nav-search-form" action="/search"  method="get">
                 <div class="input-group input-group-sm">
                     <input class="form-control form-control-navbar" type="search" placeholder="搜索..."  name="keyword" value=""  aria-label="Search">
                     <div class="input-group-append">

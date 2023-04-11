@@ -1,3 +1,6 @@
+body.top-navigation{
+    background-color: #f3f3f4!important;
+}
 .docs-menu-box {
     max-width: 220px;
     width: 100%;
@@ -195,14 +198,17 @@
     top: 20px;
     transform: rotate(135deg);
 }
-
+.footer{
+    position: fixed!important;
+}
 /*定义左边布局*/
 .docs-box {
     display: flex;
     width: 100%;
-    height: calc(100vh - 102px);
-    overflow: auto;
-    position: relative;
+    /*height: calc(100vh - 100px);*/
+    /*overflow: auto;*/
+    /*position: relative;*/
+    position: absolute;
 }
 
 .docs-left-menu {
@@ -219,7 +225,7 @@
 
     /* 设置左右方向显示隐藏 */
     /*height: 100%;*/
-    z-index: 100;
+    z-index: 999;
     transition: all 0.5s;
 }
 
@@ -228,7 +234,7 @@
     /*    flex:0 0 0px;*/
     /*}*/
     .docs-left-menu {
-        position: fixed;
+        /*position: fixed;*/
     }
 
     .docs-right-content {
@@ -262,7 +268,7 @@
 .docs-right-content {
     flex: 1 1;
     padding: 0 20px;
-    margin: 10px 0;
+    margin: 10px 0 44px 0;
     background-color: #fff;
     overflow: auto;
     -webkit-overflow-scrolling: touch; /* 提高 iOS 滑动性能 */
@@ -296,6 +302,6 @@
     outline: none;
     border-left: 1px solid #fff;
     margin-left: -1px;
-    z-index: 100;
+    z-index: 999;
 }
 
