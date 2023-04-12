@@ -1,4 +1,4 @@
-@extends('docs::layouts.master')
+@extends('docs::layouts.docs')
 
 @section('content')
     <h1>Hello World</h1>

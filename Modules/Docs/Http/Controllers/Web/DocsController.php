@@ -4,9 +4,9 @@ namespace Modules\Docs\Http\Controllers\Web;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Modules\Docs\Http\Controllers\DocsBaseController;
 
-class DocsController extends Controller
+class DocsController extends DocsBaseController
 {
     /**
      * Display a listing of the resource.

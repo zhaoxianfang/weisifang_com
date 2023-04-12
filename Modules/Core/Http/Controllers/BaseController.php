@@ -25,7 +25,17 @@ class BaseController extends Controller
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->user    = auth('web')->check() ? auth('web')->user() : (auth('api')->check() ? auth('api')->user() : null);
+        $this->user    = auth('web')->check()
+            ? auth('web')->user()
+            : (
+            auth('api')->check()
+                ? auth('api')->user()
+                : (
+            auth('admin')->check()
+                ? auth('admin')->user()
+                : null
+            )
+            );
     }
 
     public function json($data = [], $status = 200)

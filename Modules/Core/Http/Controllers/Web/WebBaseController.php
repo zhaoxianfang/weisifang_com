@@ -37,7 +37,7 @@ class WebBaseController extends BaseController
      */
     public function success(array $data = [], string $message = '成功', int $code = 200, string $url = '', int $wait = 3)
     {
-        return response()->json(compact('code', 'message', 'url', 'wait', 'data'), $code);
+        return response()->json(compact('code', 'message', 'url', 'wait', 'data'), $code)->send();
     }
 
     /**
