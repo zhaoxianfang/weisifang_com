@@ -115,6 +115,9 @@
                                 <a href="javascript:;" id='images_none'>
                                     <i class="fa fa-file-image-o big-icon"></i>
                                 </a>
+                                <p>原始图片大小：<text id="old_size"></text></p>
+                                <p>压缩图片大小：<text id="minify_size"></text></p>
+                                <p>压缩率：<text id="minify_ratio"></text></p>
                             </p>
                         </div>
                     </div>
@@ -178,6 +181,9 @@
             $('#preview_img').attr("src",res.data.base64_str);
             // $('#preview_img_area').val(res.data.base64_str);
             $('#preview_img_pre').text(res.data.base64_str);
+            $('#old_size').text(res.data.old_size);
+            $('#minify_size').text(res.data.minify_size);
+            $('#minify_ratio').text(res.data.minify_ratio);
         }
 
 

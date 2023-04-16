@@ -35,9 +35,9 @@
                         <div class="col-sm-6">
                             <h3 class="m-t-none m-b">原代码：
                                 <select class="form-control" id="code_type_select" style="width: 150px;float: right;margin-right: -15px;">
+                                    <option value="auto" >自动识别</option>
                                     <option value="js" >JS 代码</option>
                                     <option value="css" >CSS代码</option>
-                                    <option value="auto" >自动识别</option>
                                 </select>
                             </h3>
                             <form role="form" method="post">
@@ -58,6 +58,8 @@
                                     <textarea class="form-control" id="preview_string" placeholder="压缩后的代码..." rows="20"></textarea>
                                 </div>
                             </div>
+                            <p>原始大小：<text id="old_len"></text></p>
+                            <p>压缩大小：<text id="new_len"></text></p>
                             <p>压缩率：<text id="minify_ratio"></text></p>
                         </div>
                     </div>
@@ -88,6 +90,8 @@
             $('#submit_btn').attr("disabled",false).html('<i class="fa fa-suitcase"></i> &nbsp&nbsp; 开始压缩');
             $('#preview_string').val(res.data.min_str);
             $('#minify_ratio').text(res.data.minify_ratio);
+            $('#old_len').text(res.data.old_len);
+            $('#new_len').text(res.data.new_len);
         }
 
 

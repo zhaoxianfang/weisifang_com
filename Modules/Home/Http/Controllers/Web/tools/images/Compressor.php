@@ -21,6 +21,7 @@ class Compressor extends HomeBase
             if (!$file->isValid()) {
                 $this->error('图片上传失败', 404);
             }
+            $oldSize = $file->getSize();
 
             $originalName = $file->getClientOriginalName();     // 原文件名
             $ext          = $file->getClientOriginalExtension();// 扩展名
@@ -42,11 +43,31 @@ class Compressor extends HomeBase
             } else {
                 $result = $Compressor->set($realPath)->proportion($input['proportion'])->get(true);
             }
+            $newSize = $this->get_base64img_size($result);
 
-            return $this->success(['base64_str' => $result], '转换成功', 200);
+            return $this->success(['base64_str' => $result, 'old_size' => byteFormat($oldSize), 'minify_size' => byteFormat($newSize), 'minify_ratio' => bcmul(bcdiv(bcsub($oldSize, $newSize, 4), $oldSize, 4), 100, 2) . '%'], '转换成功', 200);
         }
 
 
         return view('home::home.tools.images.compressor', []);
+    }
+
+    /**
+     * # php获取base64格式图片的大小
+     *
+     * @param string $base64img base64格式的图片
+     * @param string $type      默认获取的大小的单位为KB，可以指定单位为 B
+     *
+     * @return string
+     */
+    public function get_base64img_size($base64img, $type = 'KB')
+    {
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64img, $result)) {
+            $base_img = str_replace($result[1], '', $base64img);
+            $base_img = str_replace('=', '', $base_img);
+            $img_len  = strlen($base_img);
+            return intval($img_len - ($img_len / 8) * 2); // 图片大小 ，单位：bit
+        }
+        return 0;
     }
 }
