@@ -11,7 +11,7 @@
         "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "zxf/tools": "^1.2"
+        "zxf/tools": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

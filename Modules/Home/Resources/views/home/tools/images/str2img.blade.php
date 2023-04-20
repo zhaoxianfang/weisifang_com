@@ -37,9 +37,9 @@
                                        <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">图片内容</label>
                                             <div class="col-lg-10">
-                                                <input type="text" id="text" name="text" placeholder="填入字符串" value="hello!" class="form-control" required="">
+                                                <input type="text" id="text" name="text" placeholder="填入字符串" value="您好!<br>hello!" class="form-control" required="">
                                                 <span class="form-text m-b-none">
-                                                    <strong>提示:</strong>填写数字、字母等
+                                                    <strong>提示:</strong>填写数字、字母等,不支持<code>#</code>,可以使用<code><<span>br</sapn>></code>字符自定义换行
                                                 </span>
                                             </div>
                                         </div>
@@ -80,12 +80,12 @@
                                             <label class="col-lg-2 col-form-label">文字字体</label>
                                             <div class="col-lg-10">
                                                 <select class="select2_font form-control" name="font">
-                                                    <option value="a_kspy">Aa楷书拼音</option>
+                                                    <option value="a_kspy" selected>Aa楷书拼音</option>
                                                     <option value="yuanti">圆体</option>
                                                     <option value="diandain">点点像素体-方形</option>
                                                     <option value="diandain_yt">点点像素体-圆形</option>
                                                     <option value="diandain_lx">点点像素体-菱形</option>
-                                                    <option value="lishu" selected>隶书</option>
+                                                    <option value="lishu">隶书</option>
                                                     <option value="qiuhong">秋鸿楷体</option>
                                                     <option value="taiwan_lishu">台湾隶书</option>
                                                     <option value="xingshu">行书</option>
@@ -110,25 +110,15 @@
                                                     <option value="sj_ltjhjt">三极立体极黑简体</option>
                                                 </select>
                                                 <span class="form-text m-b-none">
-                                                    <strong>提示:</strong>填写数字、字母等
+                                                    <strong>提示:</strong>字体由 「猫啃网」免费提供
                                                 </span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-lg-2 col-form-label">允许文字换行</label>
-                                            <div class="col-lg-10">
-                                                <select class="select2_font form-control" name="allow_wrap">
-                                                    <option value="1">允许</option>
-                                                    <option value="0">禁止</option>
-                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label class="col-lg-2 col-form-label">文字旋转角度</label>
                                             <div class="col-lg-10">
-                                                <input type="text" value="10" name="rotate" class="dial dial-rotate m-r-sm" data-fgColor="#1AB394" data-width="85" data-height="85" data-min="0" data-max="360"/>
+                                                <input type="text" value="0" name="rotate" class="dial dial-rotate m-r-sm" data-fgColor="#1AB394" data-width="85" data-height="85" data-min="0" data-max="360"/>
                                                 <span class="form-text m-b-none">
                                                     <strong>提示:</strong>点击或者滚动鼠标
                                                 </span>
@@ -136,7 +126,6 @@
                                         </div>
 
                                         <div>
-
                                             <button type="submit" class="btn btn-success  dim btn-block" ><i class="fa fa-upload"></i> &nbsp;&nbsp; 生成 图片</button>
                                         </div>
                                     </form>
@@ -151,8 +140,7 @@
 
                                         <div id="compressor_res_box" style="display: none;">
 
-
-                                            <img src="/tools/text2png/通过左侧配置项生成此效果图:demo/500/300/ffffff/0000ff/28/a_kspy/0.html" id="preview_img" alt="预览图片" style="width: auto;max-width: 100%;margin-bottom: 25px;">
+                                            <img src="/tools/text2png/通过左侧配置项生成此效果图:demo/500/300/ffffff/0000ff/28/a_kspy.html" id="preview_img" alt="预览图片" style="width: auto;max-width: 100%;margin-bottom: 25px;">
 
 {{--                                            <p>base64 文件:</p>--}}
 {{--                                            <!-- <textarea class="form-control" id="preview_img_area" placeholder="提交后生成的base64图片"></textarea> -->--}}
@@ -221,14 +209,13 @@
             var bg_color = (document.forms["str_to_img"]['bg_color'].value).substr(1);
             var font = document.forms["str_to_img"]['font'].value;
             var rotate = document.forms["str_to_img"]['rotate'].value;
-            var allow_wrap = document.forms["str_to_img"]['allow_wrap'].value;
 
             // console.log(document.forms["str_to_img"])
 
             let protocol = window.location.protocol, host = window.location.host;
             let url_domain = `${protocol}//${host}`;
 
-            var url = url_domain+'/tools/text2png/'+text+'/'+width+'/'+height+'/'+color+'/'+bg_color+'/'+rotate+'/'+font+'/'+allow_wrap+'.html';
+            var url = url_domain+'/tools/text2png/'+text+'/'+width+'/'+height+'/'+color+'/'+bg_color+'/'+rotate+'/'+font+'.html';
 
             $('#images_none').hide()
             $('#compressor_res_box').show()

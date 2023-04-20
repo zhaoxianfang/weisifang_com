@@ -4,6 +4,7 @@ namespace Modules\Home\Http\Controllers\Web\tools\images;
 
 use Modules\Home\Http\Controllers\HomeBase;
 
+use zxf\tools\TextToImg;
 use zxf\tools\TextToPNG;
 
 // 字符串转图片
@@ -19,7 +20,7 @@ class StrToImg extends HomeBase
     public function create($text = '')
     {
 
-        $paramStr = $text ? $text : '欢迎您的使用/400/300/FFFFFF/0000FF/0/lishu/1';
+        $paramStr = $text ? $text : '文字生成图片ABC/400/300/FFFFFF/0000FF/0/lishu/1';
         $paramStr = rtrim($paramStr, ".html");
         $param    = explode('/', $paramStr);
 
@@ -31,13 +32,15 @@ class StrToImg extends HomeBase
         $bgcolor   = isset($param['4']) && !empty($param['4']) ? $param['4'] : '0000FF';
         $rotate    = isset($param['5']) && !empty($param['5']) ? $param['5'] : '0';
         $font      = isset($param['6']) && !empty($param['6']) ? $param['6'] : 'lishu';
-        $allowWrap = isset($param['7']) ? (bool)$param['7'] : true; //是否允许换行
 
         //隶书字体 lishu
-        $text    = strtr($text, '+', ' ');
+        // $text    = strtr($text, '+', ' '); // TextToPNG 中使用
         $color   = strtr($color, '#', '');
         $bgcolor = strtr($bgcolor, '#', '');
 
-        TextToPNG::instance()->setFontStyle($font)->setText($text)->setSize($width, $height)->setColor($color)->setBackgroundColor($bgcolor)->setTransparent(false)->setRotate($rotate)->allowWrap($allowWrap)->draw();
+        // TextToPNG::instance()->setFontStyle($font)->setText($text)->setSize($width, $height)->setColor($color)->setBackgroundColor($bgcolor)->setTransparent(false)->setRotate($rotate)->allowWrap($allowWrap)->draw();
+        // 另一种方式
+        TextToImg::instance($width, $height)->setFontStyle($font)->setText($text)->setColor($color)->setBgColor($bgcolor)->setAngle($rotate)->render();
+        die;
     }
 }

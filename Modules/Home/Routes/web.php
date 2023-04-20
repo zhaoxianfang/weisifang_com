@@ -47,7 +47,7 @@ Route::prefix('tools')->name('tools.')->group(function () {
     // 其他路由
 
     // demo : /tools/text2png/ApiDoc2.0上线啦/1000/100/FFFFFF/7B00FF/0/qiuhong.html
-    Route::get('/text2png/{text}/{width?}/{height?}/{color?}/{bgcolor?}/{rotate?}/{font?}/{allow_wrap?}', [Web\tools\images\StrToImg::class, 'create'])->where('text', '.*');
+    Route::get('/text2png/{text}/{width?}/{height?}/{color?}/{bgcolor?}/{rotate?}/{font?}', [Web\tools\images\StrToImg::class, 'create'])->where('text', '.*');
     // mysql 数据字典生成
     Route::any('mysql/dictionary', [Web\tools\mysql\Dictionary::class, 'index']);
 });
