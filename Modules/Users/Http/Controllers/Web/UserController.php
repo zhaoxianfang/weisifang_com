@@ -1,34 +1,65 @@
 <?php
 
-namespace Modules\User\Http\Controllers\Web;
+namespace Modules\Users\Http\Controllers\Web;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Modules\Core\Http\Controllers\Web\WebBaseController;
+use Modules\Users\Services\UserServices;
 
-class UserController extends Controller
+class UserController extends WebBaseController
 {
     /**
      * Display a listing of the resource.
+     *
      * @return Renderable
      */
     public function index()
     {
-        return view('user::index');
+        return view('users::index');
+    }
+
+    public function login(Request $request)
+    {
+        // 默认模式 手机号+密码 session 登录
+         return $this->json(UserServices::instance()->login($request->mobile, $request->password));
+        // 设置 手机号+密码 session 登录
+        // return $this->json(UserServices::instance()->setAuthName('web')->setAuthType('session')->setLoginType('password')->login($request->mobile, $request->password));
+        // 设置 手机号+密码 api 登录
+        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('password')->login($request->mobile, $request->password));
+        // 设置 邮箱号+密码 api 登录
+        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('email')->login($request->email, $request->password));
+        // 设置 id 方式进行 api 登录
+        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('id')->login($request->id));
+    }
+
+    /**
+     * 用户注册
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        return $this->json(UserServices::instance()->register($request->post()));
     }
 
     /**
      * Show the form for creating a new resource.
+     *
      * @return Renderable
      */
     public function create()
     {
-        return view('user::create');
+        return view('users::create');
     }
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param Request $request
+     *
      * @return Renderable
      */
     public function store(Request $request)
@@ -38,28 +69,34 @@ class UserController extends Controller
 
     /**
      * Show the specified resource.
+     *
      * @param int $id
+     *
      * @return Renderable
      */
     public function show($id)
     {
-        return view('user::show');
+        return view('users::show');
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param int $id
+     *
      * @return Renderable
      */
     public function edit($id)
     {
-        return view('user::edit');
+        return view('users::edit');
     }
 
     /**
      * Update the specified resource in storage.
+     *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
+     *
      * @return Renderable
      */
     public function update(Request $request, $id)
@@ -69,7 +106,9 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param int $id
+     *
      * @return Renderable
      */
     public function destroy($id)

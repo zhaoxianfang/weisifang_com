@@ -40,7 +40,7 @@ class BaseController extends Controller
 
     public function json($data = [], $status = 200)
     {
-        return response()->json($data, $status)->send();
+        return response()->json($data, $status);
     }
 
     public function api_json($data = [], $code = 200, $message = '成功', $status = 200)

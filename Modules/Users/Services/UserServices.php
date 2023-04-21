@@ -18,17 +18,17 @@ class UserServices extends BaseService
     // auth 模块名称 web|admin|docs|api|...
     private $authName = 'web';
 
-    // 用户授权方式 session|jwt|passport|...
+    // 用户授权方式 支持session或token(jwt|passport|...)两种方式
     private $authType = 'session';
 
     // 用户登录方式 参见 $loginTypeMap
-    private $loginType = 'session';
+    private $loginType = 'password';
 
     // 登录方式
     const LOGIN_TYPE_PASSWORD = 'password';
     const LOGIN_TYPE_EMAIL    = 'email';
     const LOGIN_TYPE_SMS      = 'sms';
-    const LOGIN_TYPE_USER_ID  = 'user_id';
+    const LOGIN_TYPE_USER_ID  = 'id';
 
     public static $loginTypeMap = [
         self::LOGIN_TYPE_PASSWORD => '手机号+密码',
@@ -44,7 +44,7 @@ class UserServices extends BaseService
         return $this;
     }
 
-    // 设置授权方式
+    // 设置授权方式 支持session或token两种方式
     public function setAuthType($type = 'session')
     {
         $this->authType = $type;
@@ -52,9 +52,12 @@ class UserServices extends BaseService
     }
 
     // 设置登录方式
-    public function setLoginType($type = 'session')
+    public function setLoginType($type = self::LOGIN_TYPE_PASSWORD)
     {
-        $this->authType = $type;
+        if (empty(self::$loginTypeMap[$type])) {
+            throw new \Exception('不支持的登录方式');
+        }
+        $this->loginType = $type;
         return $this;
     }
 
@@ -70,101 +73,101 @@ class UserServices extends BaseService
         ];
     }
 
-    // 用户进行手机号和密码登录
-    public function login($mobile, $password = '')
+    /**
+     * 使用账号 和密码进行登录
+     *
+     * @param string      $account  账号(手机号、邮箱号、用户id)
+     * @param string|null $password 密码（账号为用户id时候为空）
+     *
+     * @return array
+     */
+    public function login(string $account, string|null $password = '')
     {
+        $remember = false; // 是否记住密码
+
         $code    = 412;
         $message = '账号或者密码错误';
         $data    = [];
-        if ($this->loginType == 'id') {
-            $user = User::find($mobile); // 此时 $mobile 表示用户id
+
+        if ($this->authType == 'session') {
+            $isLogin = false;
+            if ($this->loginType == self::LOGIN_TYPE_USER_ID) {
+                $isLogin = auth($this->authName)->loginUsingId($account, $remember);
+            }
+            if ($this->loginType == self::LOGIN_TYPE_PASSWORD) {
+                $isLogin = auth($this->authName)->attempt(['mobile' => $account, 'password' => $password], $remember);
+            }
+            if ($this->loginType == self::LOGIN_TYPE_EMAIL) {
+                $isLogin = auth($this->authName)->attempt(['email' => $account, 'password' => $password], $remember);
+            }
+            if ($this->loginType == self::LOGIN_TYPE_SMS) {
+                // TODO 短信登录
+                // $isLogin = auth($this->authName)->login($user, $remember);
+            }
+            if ($isLogin) {
+                $user = auth($this->authName)->user();
+                if ($user->status !== User::STATUS_NORMAL) {
+                    $code    = 412;
+                    $message = '账号未激活或已冻结';
+                } else {
+                    $code    = 200;
+                    $message = '登录成功';
+                }
+            }
         } else {
-            $user = User::where('mobile', $mobile)->first();
+            // 使用 api token 登录
+            $user = '';
+            switch ($this->loginType) {
+                case self::LOGIN_TYPE_USER_ID:
+                    $user = User::where('id', $account)->first();
+                    break;
+                case self::LOGIN_TYPE_PASSWORD:
+                case self::LOGIN_TYPE_SMS:
+                    $user = User::where('mobile', $account)->first();
+                    break;
+                case self::LOGIN_TYPE_EMAIL:
+                    $user = User::where('email', $account)->first();
+                    break;
+                default:
+            }
+
+            if ($user && ($this->loginType == self::LOGIN_TYPE_USER_ID || Hash::check($password, $user->password))) {
+                if ($user->status !== User::STATUS_NORMAL) {
+                    $code    = 412;
+                    $message = '账号未激活或已冻结';
+                } else {
+                    $authInfo = $user->createToken($this->authName);
+                    $token    = $authInfo->accessToken;
+                    if ($token) {
+                        $code    = 200;
+                        $message = '登录成功';
+                        $data    = [
+                            'access_token' => $token,
+                            'token_type'   => 'Bearer',
+                            // 'client_id'  => $authInfo->client_id
+                        ];
+                    }
+                }
+            }
         }
 
-        if (!$user) {
-            return [
-                'code'    => 404,
-                'message' => '该手机号尚未注册',
-            ];
-        }
-        if ($this->useApiToken && $this->loginType != 'id') {
-            if ($user && Hash::check($password, $user->password)) {
-                // 创建api token
-                $authInfo = $user->createToken($this->authName);
-                $token    = $authInfo->accessToken;
-//                $clientId = $authInfo->client_id;
-                if ($token) {
-                    $code    = 200;
-                    $message = '登录成功';
-                    $data    = [
-                        'access_token' => $token,
-                        'token_type'   => 'Bearer',
-                        //                        'client_id'            => $clientId
-                    ];
-                } else {
-                    return [
-                        'code'    => 404,
-                        'message' => '登录失败',
-                        'data'    => $data,
-                    ];
-                }
-            }
-        } else {
-            if ($this->loginType == 'id') {
-                // 创建api token
-                $token = $user->createToken($this->authName)->accessToken;
-                if ($token) {
-                    $code    = 200;
-                    $message = '登录成功';
-                    $data    = [
-                        'access_token' => $token,
-                        'token_type'   => 'Bearer',
-                    ];
-                } else {
-                    return [
-                        'code'    => 404,
-                        'message' => '登录失败',
-                        'data'    => $data,
-                    ];
-                }
-            } else {
-                $remember = false; // 是否记住密码
-                if (auth($this->authName)->attempt(['mobile' => $mobile, 'password' => $password], $remember)) {
-                    $code    = 200;
-                    $message = '登录成功';
-                }
-            }
-        }
         // 检查关联企业
-        if ($code == 200) {
-            if ($this->useApiToken) {
-                // 如果是 api token 方式，需要手动修改 header 头 让auth() 可以获取当前用户信息
-                request()->headers->set('Authorization', "Bearer " . $token);
-            }
+        //    if ($this->useApiToken) {
+        //        // 如果是 api token 方式，需要手动修改 header 头 让auth() 可以获取当前用户信息
+        //        request()->headers->set('Authorization', "Bearer " . $token);
+        //    }
 
-            $user         = auth($this->authName)->user();
-            $data['user'] = $user;
-            // 判断 用户可以关联的企业
-            $enterpriseList = collect($user->enterprises);
-            if ($enterpriseList->count() == 1) {
-                $user->enterprise_id = $enterpriseList->first()->id;
-                $user->save();
-            }
-            $data['enterprises'] = $enterpriseList;
-        }
-        return [
-            'code'    => $code,
-            'message' => $message,
-            'data'    => $data,
-        ];
+        // 记录用户来源问题
 
+        return compact('code', 'message', 'data');
     }
 
     // 用户退出
     public function logout()
     {
         auth($this->authName)->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         return [
             'code'    => 200,
             'message' => '退出成功',
@@ -174,44 +177,42 @@ class UserServices extends BaseService
     // 注册
     public function register($data)
     {
+        $code    = 412;
+        $message = '注册失败!';
         try {
             // 注销包含字段
             $contains = ['username', 'nickname', 'mobile', 'gender', 'email', 'password'];
             if (!Arr::has($data, $contains)) {
-                return [
-                    'code'    => 412,
-                    'message' => '请求参数错误',
-                ];
+                $message = '请求参数错误';
+            } else {
+                $data = Arr::only($data, $contains);
+                $user = new User([
+                    'username' => $data['username'],
+                    'nickname' => $data['nickname'],
+                    'mobile'   => $data['mobile'],
+                    'gender'   => $data['gender'],
+                    'email'    => $data['email'],
+                    'password' => bcrypt($data['password']),
+                ]);
+
+                if ($user->save()) {
+                    // 依赖 mobile 或者 email 唯一 和观察者 模式是否返回false
+                    $code    = 200;
+                    $message = '注册成功!';
+                }
             }
-
-            $data = Arr::only($data, $contains);
-            $user = new User([
-                'username' => $data['username'],
-                'nickname' => $data['nickname'],
-                'mobile'   => $data['mobile'],
-                'gender'   => $data['gender'],
-                'email'    => $data['email'],
-                'password' => bcrypt($data['password']),
-            ]);
-
-            $user->save();
-            return [
-                'code'    => 200,
-                'message' => '注册成功',
-            ];
         } catch (Exception $err) {
-            if ($err->getCode() == 2300) {
-                return [
-                    'code'    => 200,
-                    'message' => '该账号已经注册过了',
-                ];
+            if ($err->getCode() == 23000) {
+                $code    = 200;
+                $message = '该账号已经注册过了!';
+            } else {
+                $code    = 500;
+                $message = '出错啦，请稍后再试!';
             }
-            return [
-                'code'    => 500,
-                'message' => '出错啦，请稍后再试！',
-            ];
         }
+        // 记录用户来源问题
 
+        return compact('code', 'message');
     }
 
     /**
