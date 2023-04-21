@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+
+// 测试字符串复数
+Route::get('/str/{str}', function ($str = 'string') {
+    return '字符串[' . $str . ']的复数形式=>' . Str::plural($str);
+});

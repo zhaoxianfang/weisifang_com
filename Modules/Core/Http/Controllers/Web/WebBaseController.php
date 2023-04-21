@@ -21,7 +21,8 @@ class WebBaseController extends BaseController
      */
     public function error(string $message = '出错啦！', int $code = 500)
     {
-        throw new Exception($message, $code);
+        // throw new Exception($message, $code);
+        return die(response()->json(compact('code', 'message'), $code)->send());
     }
 
     /**
