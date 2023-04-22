@@ -204,7 +204,7 @@ class UserAuthServices extends BaseService
                     $authInfo = $user->createToken($this->authName);
                     $token    = $authInfo->accessToken;
                     if ($token) {
-                        // 设置 Authorization
+                        // 手动修改 header 头 让 auth() 可以获取当前用户信息
                         request()->headers->set('Authorization', "Bearer " . $token);
                         $data = [
                             'access_token' => $token,
@@ -234,13 +234,9 @@ class UserAuthServices extends BaseService
             $this->logout();
         }
 
-        // 检查关联企业
-        //    if ($this->useApiToken) {
-        //        // 如果是 api token 方式，需要手动修改 header 头 让auth() 可以获取当前用户信息
-        //        request()->headers->set('Authorization', "Bearer " . $token);
-        //    }
-
         //TODO 记录用户来源问题
+
+        // 检查关联企业
 
         return $isLogin ? compact('code', 'message', 'data') : compact('code', 'message');
     }
