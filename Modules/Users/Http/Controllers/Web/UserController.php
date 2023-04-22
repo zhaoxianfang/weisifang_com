@@ -5,7 +5,7 @@ namespace Modules\Users\Http\Controllers\Web;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\Core\Http\Controllers\Web\WebBaseController;
-use Modules\Users\Services\UserServices;
+use Modules\Users\Services\UserAuthServices;
 
 class UserController extends WebBaseController
 {
@@ -22,15 +22,15 @@ class UserController extends WebBaseController
     public function login(Request $request)
     {
         // 默认模式 手机号+密码 session 登录
-         return $this->json(UserServices::instance()->login($request->mobile, $request->password));
+        // return $this->json(UserAuthServices::instance()->login($request->mobile, $request->password));
         // 设置 手机号+密码 session 登录
-        // return $this->json(UserServices::instance()->setAuthName('web')->setAuthType('session')->setLoginType('password')->login($request->mobile, $request->password));
+        // return $this->json(UserAuthServices::instance()->auth('web')->byToken(false)->login($request->mobile, $request->password));
         // 设置 手机号+密码 api 登录
-        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('password')->login($request->mobile, $request->password));
+         return $this->json(UserAuthServices::instance()->auth('api')->byToken()->use('mobile')->login($request->mobile, $request->password));
         // 设置 邮箱号+密码 api 登录
-        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('email')->login($request->email, $request->password));
+        // return $this->json(UserAuthServices::instance()->auth('api')->byToken()->use('email')->login($request->email, $request->password));
         // 设置 id 方式进行 api 登录
-        // return $this->json(UserServices::instance()->setAuthName('api')->setAuthType('token')->setLoginType('id')->login($request->id));
+        // return $this->json(UserAuthServices::instance()->auth('api')->byToken()->use('id')->login($request->id));
     }
 
     /**
@@ -42,7 +42,7 @@ class UserController extends WebBaseController
      */
     public function register(Request $request)
     {
-        return $this->json(UserServices::instance()->register($request->post()));
+        return $this->json(UserAuthServices::instance()->register($request->post()));
     }
 
     /**

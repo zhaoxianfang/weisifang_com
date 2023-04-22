@@ -24,14 +24,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-//        if (!$this->app->routesAreCached()) {
+        //if (!$this->app->routesAreCached()) {
 
-            // Passport::hashClientSecrets(); // 如果您希望客户端密钥在存储到数据库时使用 Hash 对其进行加密
-
-            Passport::tokensExpireIn(now()->addDays(15));
-            Passport::refreshTokensExpireIn(now()->addDays(30));
-            Passport::personalAccessTokensExpireIn(now()->addMonths(6));
-
-//        }
+        // Passport::hashClientSecrets(); //(不推荐) 如果您希望客户端密钥在存储到数据库时使用 Hash 对其进行加密
+        Passport::tokensExpireIn(now()->addHour(8)); // 默认令牌发放有效期8小时
+        Passport::refreshTokensExpireIn(now()->addDays(10));// 刷新令牌 新增20天
+        Passport::personalAccessTokensExpireIn(now()->addMonths(2)); // 初次授权2个月
+        // }
     }
 }

@@ -46,7 +46,7 @@ php artisan passport:install
 
 php artisan passport:keys
 修改 access_token 长度
-php artisan passport:keys --length=512 --force
+php artisan passport:keys --length=512 --force // 默认长度 4096
 ```
 
 #### 特别说明
