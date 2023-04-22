@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 // 使用 Passport 方式登录 Passport也是支持 session 登录模式滴
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 

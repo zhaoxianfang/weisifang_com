@@ -3,6 +3,7 @@
 namespace Modules\Users\Entities;
 
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class UserOrigin extends Model
@@ -29,6 +30,125 @@ class UserOrigin extends Model
      * @var array
      */
     protected $casts = [
-        // "extra" => 'array',
+        "user_info"     => 'array',
+        "all"           => 'array',
+        "authorized_at" => 'datetime',
+        "login_at"      => 'datetime',
+        "verified"      => 'boolean',
     ];
+
+    // 用户来源
+    const SOURCE_ACCOUNT_REGISTER  = 'account_register';
+    const SOURCE_SMS               = 'sms';
+    const SOURCE_QQ                = 'qq';
+    const SOURCE_SINA              = 'sina';
+    const SOURCE_WECHAT            = 'wechat';
+    const SOURCE_MINI_WECHAT       = 'mini_wechat';
+    const SOURCE_MINI_WECHAT_SHARE = 'mini_wechat_share';
+    const SOURCE_USER_SHARE_WEB    = 'user_share_web';
+    const SOURCE_OTHER             = 'other';
+
+    static $sourceMaps = [
+        self::SOURCE_ACCOUNT_REGISTER  => '账号注册',
+        self::SOURCE_SMS               => '手机验证码',
+        self::SOURCE_QQ                => 'QQ快速登录',
+        self::SOURCE_SINA              => '新浪微博',
+        self::SOURCE_WECHAT            => '微信',
+        self::SOURCE_MINI_WECHAT       => '微信小程序',
+        self::SOURCE_MINI_WECHAT_SHARE => '微信小程序分享页面',
+        self::SOURCE_USER_SHARE_WEB    => '用户分享web',
+        self::SOURCE_OTHER             => '暂未接入的来源',
+    ];
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * 记录用户来源
+     *      提示：可以使用 (UserOrigin::record($data, $source) instanceof UserOrigin) 验证是否记录上来源
+     *
+     * @param User|array $data   用户来源的array数据,如果使用的是 注册或者短信登录来源，$data 的值为 User模型对象，否则为数组
+     * @param string     $source 来源，参见 self::$sourceMaps
+     *
+     * @return bool|UserOrigin
+     * @throws Exception
+     */
+    public static function record($data, string $source = '')
+    {
+        if (empty($data) || empty(self::$sourceMaps[$source])) {
+            return false;
+        }
+        // 省市
+        $country = $province = $city = $county = $town = $village = $userOrigin = null;
+
+        // 当前用户信息，如果没有登录的返回 null
+        $user = get_user_info();
+
+        // 第三方数据来源
+        $openId = $data['openid'] ?? ($data['open_id'] ?? $data['uid']);
+        $openId = !empty($openId) ? $openId : (!empty($data['mobile']) ? $data['mobile'] : (!empty($data['email']) ? $data['email'] : null));
+
+        if (in_array($source, [self::SOURCE_ACCOUNT_REGISTER, self::SOURCE_SMS])) {
+            // 注册或者短信登录，一定会有 User::class 数据
+            if (!($data instanceof User)) {
+                return false;
+            }
+
+            $nickname   = $data['nickname'] ?? null;
+            $cover      = $data['cover'] ?? null;
+            $userOrigin = self::query()->where('user_id', $data['id'])->first();
+
+        } else {
+            //昵称 QQ:nickname  Sina:name|screen_name
+            $nickname = $data['nickname'] ?? ($data['name'] ?? null);
+            // 本平台性别：0未设置，1男，2女
+            // 性别：QQ-gender_type：1女2男  Sina-gender:m男w:女
+            $gender = $source == self::SOURCE_QQ ? ($data['gender_type'] == 2 ? 1 : 2) : ($source == self::SOURCE_SINA ? ($data['gender'] == 'm' ? 1 : 2) : 0);
+            //头像 QQ:figureurl_qq Sina:avatar_large
+            $cover = $data['figureurl_qq'] ?? ($data['avatar_large'] ?? null);
+
+            if ($source == self::SOURCE_SINA) {
+                list($province, $city) = explode(' ', $data['location']);
+            }
+            if ($source == self::SOURCE_QQ) {
+                $province = $data['province'];
+                $city     = $data['city'];
+            }
+            if ($openId) {
+                $userOrigin = self::query()->where('open_id', $openId)->first();
+            }
+
+            if (empty($userOrigin) && !empty($cover)) {
+                $userOrigin = self::where(['source' => $source, 'cover' => $cover])->first();
+            }
+        }
+
+        if (!$userOrigin) {
+            $userOrigin = new UserOrigin([
+                'user_id' => !empty($user) ? $user['id'] : null,
+                'open_id' => $openId ?? null,
+                'source'  => $source,
+
+                'nickname' => $nickname ?? null,
+                'gender'   => $gender ?? 0,//'性别：0未设置，1男，2女');
+                'cover'    => $cover ?? null,
+
+                'country'  => $country,
+                'province' => $province,
+                'city'     => $city,
+                'county'   => $county,
+                'town'     => $town,
+                'village'  => $village,
+                'unionid'  => !empty($data['unionid']) ? $data['unionid'] : null,
+
+                'all' => json_encode($data),
+            ]);
+            $userOrigin->save();
+            $userOrigin->refresh();
+        }
+
+        return $userOrigin;
+    }
 }

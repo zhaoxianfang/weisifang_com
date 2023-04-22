@@ -23,13 +23,9 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable()->comment('邮箱认证时间');
             $table->string('id_card', 20)->nullable()->unique()->comment('身份证号');
             $table->string('password')->nullable();
-            $table->string('province', 50)->nullable()->comment('省份');
-            $table->string('city', 50)->nullable()->comment('市');
-            $table->string('county', 50)->nullable()->comment('县区');
-            $table->string('town', 50)->nullable()->comment('乡镇');
-            $table->string('village', 50)->nullable()->comment('村');
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedBigInteger('enterprise_id')->index()->nullable()->comment('默认进入的企业/公司/机构/团体id');
             $table->unsignedTinyInteger('status')->default(1)->index()->comment('状态：0未激活，1正常，2冻结');
         });
         \DB::statement("ALTER TABLE `users` comment '用户信息'");

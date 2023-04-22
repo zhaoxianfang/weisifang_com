@@ -41,6 +41,6 @@ class StrToImg extends HomeBase
         // TextToPNG::instance()->setFontStyle($font)->setText($text)->setSize($width, $height)->setColor($color)->setBackgroundColor($bgcolor)->setTransparent(false)->setRotate($rotate)->allowWrap($allowWrap)->draw();
         // 另一种方式
         TextToImg::instance($width, $height)->setFontStyle($font)->setText($text)->setColor($color)->setBgColor($bgcolor)->setAngle($rotate)->render();
-        die;
+        exit;
     }
 }

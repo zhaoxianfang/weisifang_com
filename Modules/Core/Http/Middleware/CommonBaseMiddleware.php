@@ -30,7 +30,7 @@ class CommonBaseMiddleware
         $response = $next($request);
 
         try {
-            $userId = auth('web')->check() ? auth('web')->id() : (auth('admin')->check() ? auth('admin')->id() : 0);
+            $userId = (int)get_user_info('id');
             SystemLog::writeLog('操作请求', [], $userId, [], SystemLog::LEVEL_LOWEST);
         } catch (\Exception $err) {
         }

@@ -59,7 +59,7 @@ class UserAuthServices extends BaseService
      *
      * @var string 参见 $loginTypeMap
      */
-    private $loginType = 'password';
+    private $loginType = 'mobile';
 
     /**
      * 是否记住登录状态
@@ -172,6 +172,7 @@ class UserAuthServices extends BaseService
     {
         $data    = [];
         $isLogin = false;
+        $user    = '';
 
         // 使用session 登录
         if (!$this->replyToken) {
@@ -234,7 +235,10 @@ class UserAuthServices extends BaseService
             $this->logout();
         }
 
-        //TODO 记录用户来源问题
+        if ($isLogin && $this->loginType == self::LOGIN_TYPE_SMS) {
+            // 记录用户来源
+            UserOrigin::record($user, UserOrigin::SOURCE_SMS);
+        }
 
         // 检查关联企业
 
@@ -272,6 +276,7 @@ class UserAuthServices extends BaseService
     {
         $code    = 412;
         $message = '注册失败!';
+        $user    = '';
         DB::beginTransaction();
         try {
             // 注销包含字段
@@ -281,18 +286,21 @@ class UserAuthServices extends BaseService
             } else {
                 $data = Arr::only($data, $contains);
                 $user = new User([
-                    'username' => $data['username'],
-                    'nickname' => $data['nickname'],
-                    'mobile'   => $data['mobile'],
-                    'gender'   => $data['gender'],
-                    'email'    => $data['email'],
-                    'password' => bcrypt($data['password']),
+                    'real_name' => $data['username'],
+                    'nickname'  => $data['nickname'],
+                    'mobile'    => $data['mobile'],
+                    'gender'    => $data['gender'],
+                    'email'     => $data['email'],
+                    'password'  => bcrypt($data['password']),
                 ]);
 
                 if ($user->save()) {
                     // 依赖 mobile 或者 email 唯一 和观察者 模式是否返回false
                     $code    = 200;
                     $message = '注册成功!';
+                    $user->refresh();
+                    // 记录用户来源
+                    $user && UserOrigin::record($user, UserOrigin::SOURCE_ACCOUNT_REGISTER);
                 }
                 DB::commit();
             }
@@ -306,7 +314,6 @@ class UserAuthServices extends BaseService
                 $message = '出错啦，请稍后再试!';
             }
         }
-        //TODO 记录用户来源问题
 
         return compact('code', 'message');
     }
@@ -324,96 +331,36 @@ class UserAuthServices extends BaseService
     {
         DB::beginTransaction();
         try {
-            $openId = $userInfo['openid'] ?? ($userInfo['open_id'] ?? $userInfo['uid']);
-            if (empty($openId)) {
-                throw new Exception('登录失败！');
-            }
-            //昵称 QQ:nickname  Sina:name|screen_name
-            $nickname = $userInfo['nickname'] ?? ($userInfo['name'] ?? '');
-            // 本平台性别：0未设置，1男，2女
-            // 性别：QQ-gender_type：1女2男  Sina-gender:m男w:女
-            $gender = $loginSource == 'qq' ? ($userInfo['gender_type'] == 2 ? 1 : 2) : ($loginSource == 'sina' ? ($userInfo['gender'] == 'm' ? 1 : 2) : 0);
-            //头像 QQ:figureurl_qq Sina:avatar_large
-            $cover = $userInfo['figureurl_qq'] ?? ($userInfo['avatar_large'] ?? '');
-
-            // 省市
-            $province = $city = '';
-            if ($loginSource == 'sina') {
-                list($province, $city) = explode(' ', $userInfo['location']);
-            }
-            if ($loginSource == 'qq') {
-                $province = $userInfo['province'];
-                $city     = $userInfo['city'];
+            // 记录用户快速 和来源信息验证
+            if (empty(UserOrigin::$sourceMaps[$loginSource]) || !(($userOrigin = UserOrigin::record($userInfo, $loginSource)) instanceof UserOrigin)) {
+                throw new Exception('未识别的登录类型！');
             }
 
-            $UserOrigin = UserOrigin::where([
-                'type'    => $loginSource,
-                'open_id' => $openId,
-            ])->first();
-            if (!$UserOrigin) {
-                // 看着这里使用 cover 查询，你会感觉很诧异，使用cover 是为了解决
-                // 同一平台申请了多个应用（例如：web端app应用和移动端app应用）
-                //无法使用openid来区分，使用头像进行一波比较
-                $UserOrigin = UserOrigin::where([
-                    'type'  => $loginSource,
-                    'cover' => $cover,
-                ])->first();
-
-                $user = $UserOrigin ? $UserOrigin->user : '';
-                $data = [
-                    'nickname' => $nickname,
-                    'gender'   => $gender,//'性别：0未设置，1男，2女');
-                    'cover'    => $cover,
-                    'type'     => $loginSource,
-                    'open_id'  => $openId,
-                    'province' => $province,
-                    'city'     => $city,
-                    'all'      => json_encode($userInfo),
-                    'status'   => 1,
-                ];
-                if ($user) {
-                    $data['user_id'] = $user->id;
-                }
-                $UserOrigin = UserOrigin::create($data);
-                if ($user) {
-                    $UserOrigin->refresh();
-                }
-            }
-
-            if (isset($UserOrigin->user_id) && $UserOrigin->user()->exists()) {
-                $user = $UserOrigin->user;
+            if ($userOrigin->user()->exists()) {
+                $user = $userOrigin->user;
             } else {
                 $user = new User([
-                    'username' => $UserOrigin['username'] ?? '',
-                    'nickname' => $UserOrigin['nickname'] ?? '',
-                    'gender'   => $UserOrigin['gender'],
-                    'cover'    => $UserOrigin['cover'],
-                    'province' => $UserOrigin['province'] ?? '',
-                    'city'     => $UserOrigin['city'] ?? '',
-                    'status'   => 1,
-                    //'mobile'=>'',
-                    //'email',
-                    //'password',
-                    //'identity_card'=>'',
-                    //'email_verified_at',
-                    //'county',
-                    //'town',
-                    //'village',
-                    //'enterprise_id'
+                    'nickname' => $userOrigin['nickname'] ?? '',
+                    'gender'   => $userOrigin['gender'],
+                    'cover'    => $userOrigin['cover'],
+                    'province' => $userOrigin['province'] ?? '',
+                    'city'     => $userOrigin['city'] ?? '',
                 ]);
                 $user->save();
-                $UserOrigin->user_id = $user->id;
-                $UserOrigin->save();
+                $user->refresh();
+                $userOrigin->user_id = $user->id;
+                $userOrigin->save();
+                $userOrigin->refresh();
             }
             // 转数组
-            $user                = collect($user)->toArray();
-            $user['loginSource'] = collect($UserOrigin)->except(['all', 'user'])->toArray();
-
+            $user = collect($user)->toArray();
+            // 来源
+            $user['origin'] = collect($userOrigin)->except(['all', 'user'])->toArray();
             DB::commit();
             return $user;
         } catch (Exception $exception) {
             DB::rollBack();
-            throw new Exception($exception->getMessage());
+            throw new Exception('快速登录失败:' . $exception->getMessage());
         }
     }
 

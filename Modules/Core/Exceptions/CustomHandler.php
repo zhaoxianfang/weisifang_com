@@ -109,18 +109,18 @@ class CustomHandler extends Handler
     public function report(Throwable $e)
     {
         try {
-            $userId = auth('web')->check() ? auth('web')->id() : (auth('admin')->check() ? auth('admin')->id() : 0);
+            $userId = (int)get_user_info('id');
             // 判断异常是否需要自定义报告...
             if (empty(trim($e->getMessage()))) {
                 // 没有报错信息的就直接跳过了
                 return true;
             }
             SystemLog::writeLog('系统异常', [
-                "异常信息："   => $e->getMessage(),   //返回用户自定义的异常信息
-                "异常代码："   => $e->getCode(),      //返回用户自定义的异常代码
-                "文件名："    => $e->getFile(),      //返回发生异常的PHP程序文件名
+                "异常信息："      => $e->getMessage(),   //返回用户自定义的异常信息
+                "异常代码："      => $e->getCode(),      //返回用户自定义的异常代码
+                "文件名："        => $e->getFile(),      //返回发生异常的PHP程序文件名
                 "异常代码所在行" => $e->getLine(),        //返回发生异常的代码所在行的行号
-                "传递路线"    => $e->getTrace(),      //返回发生异常的传递路线
+                "传递路线"       => $e->getTrace(),      //返回发生异常的传递路线
                 // "传递路线"    => $e->getTraceAsString(),      //返回发生异常的传递路线
             ], $userId, [], SystemLog::LEVEL_ERROR);
         } catch (\Exception $err) {
