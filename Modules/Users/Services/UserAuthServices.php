@@ -204,6 +204,8 @@ class UserAuthServices extends BaseService
                     $authInfo = $user->createToken($this->authName);
                     $token    = $authInfo->accessToken;
                     if ($token) {
+                        // 设置 Authorization
+                        request()->headers->set('Authorization', "Bearer " . $token);
                         $data = [
                             'access_token' => $token,
                             'token_type'   => 'Bearer',
@@ -215,6 +217,7 @@ class UserAuthServices extends BaseService
                 }
             }
         }
+
         if ($isLogin && auth($this->authName)->check()) {
             $code    = 200;
             $message = '登录成功';
