@@ -106,8 +106,8 @@
                 });
                 $('.right-menu-wrap-ms-'+(settings.ele).substring(1)).css({
                     'display': 'block',
-                    'top': (e.pageY-8) + 'px',
-                    'left': (e.pageX-8) + 'px'
+                    'top': (e.pageY+2) + 'px',
+                    'left': (e.pageX+2) + 'px'
                     // 'top': e.clientY + 'px',
                     // 'left': e.clientX + 'px'
                 });

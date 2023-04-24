@@ -129,7 +129,7 @@ class HomeController extends HomeBase
             return $str;
         }
         foreach ($treeArr as $item) {
-            $str .= '<li class="active"><a href="#">' . $item['name'] . (
+            $str .= '<li class="active"><a class="docs-menu-item" href="#">' . $item['name'] . (
                 empty($item['label']) ? '' : '<span class="docs-menu-box-label">' . $item['label'] . '</span>'
                 ) . '</a>';
             if (!empty($item['son'])) {
