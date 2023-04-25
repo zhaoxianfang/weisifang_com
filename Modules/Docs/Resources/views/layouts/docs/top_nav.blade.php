@@ -12,12 +12,127 @@
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
-                {!! empty($top_nav_string)?'':$top_nav_string !!}
+                <li class="nav-item">
+                    <a href="/" class="nav-link">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/test_docs" class="nav-link">TestDocs</a>
+                </li>
+                <li class="nav-item dropdown dropdown-hover">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                        <li><a href="#" class="dropdown-item">Some action </a></li>
+                        <li><a href="#" class="dropdown-item">Some other action</a></li>
+
+                        <li class="dropdown-divider"></li>
+
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
+                                </li>
+
+                                <!-- Level three dropdown-->
+                                <li class="dropdown-submenu">
+                                    <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">level 2</a>
+                                    <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
+                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
+                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
+                                    </ul>
+                                </li>
+                                <!-- End Level three -->
+
+                                <li><a href="#" class="dropdown-item">level 2</a></li>
+                                <li><a href="#" class="dropdown-item">level 2</a></li>
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown dropdown-hover" style="">
+                    <a id="dropdownToolsMenu" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">在线工具</a>
+                    <ul aria-labelledby="dropdownToolsMenu" class="dropdown-menu border-0 shadow dropdown-megamenu" style="left: 0px; right: inherit;">
+                        <div class="row">
+                            <div class="col-sm-8">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">字符、文本</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/code_minify">JS、CSS压缩</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/unicode">unicode编码转换</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/json">Json格式化</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/serialize">系列化和反系列化</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">图形图像</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/compressor">图片压缩/裁剪</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/qrcode#tab=1">QrCode 二维码</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/qrcode#tab=2">BarCode 条形码</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/create">TextToPNG 文字转图片</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/ico">favicon.ico制作</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">扩展</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/mysql/dictionary">MysqlTool 生成数据库字典</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">其他</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);">...</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div style="padding-top: 40px;">
+                                            <img src="{{ asset('static/inspinia/img/modules.png') }}" alt="" class="img-fluid mx-auto d-block" style="max-height: 180px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-0 ml-md-3  unbind-form nav-search-form" action="/docs/search"  method="get">
-                <div class="input-group input-group-sm">
+            <form class="form-inline ml-0 ml-md-3  unbind-form nav-search-form" action="/search"  method="get">
+                <div class="input-group input-group-sm nav-search-form-input">
                     <input class="form-control form-control-navbar" type="search" placeholder="搜索..."  name="keyword" value=""  aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
@@ -30,6 +145,94 @@
 
         <!-- Right navbar links -->
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-envelope nav-fa"></i>
+                    <span class="badge badge-danger navbar-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="{{ asset('static/inspinia/img/a6.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">Call me whenever you can...</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="{{ asset('static/inspinia/img/a6.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    John Pierce
+                                    <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">I got your message bro</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="{{ asset('static/inspinia/img/a6.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Nora Silvester
+                                    <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">The subject goes here</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+            </li>
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-bell nav-fa"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                    <span class="dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i class="fa fa-th-large nav-fa"></i></a>
+            </li> -->
 
             <li class="nav-item dropdown">
                 <!-- <div class=" d-inline-block user-dropdown"> -->

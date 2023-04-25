@@ -28,8 +28,14 @@
     <link href="{{ asset('static/inspinia/css/adminlte_nav.min.css') }}" rel="stylesheet">
     <link href="{{ asset('static/inspinia/css/home-docs-menu.css') }}" rel="stylesheet">
 
+
+    {{--右键文档--}}
+    <link href="{{ asset('static/libs/zxf/css/mouseRight.min.css') }}" rel="stylesheet">
+    {{--    <link href="{{ asset('static/libs/flavr/flavr/css/flavr.test.css') }}" rel="stylesheet">--}}
+
+
     @section('head_css')
-        <!-- 页面中引入page css -->
+    <!-- 页面中引入page css -->
     @show
 </head>
 
@@ -44,7 +50,7 @@
             <div class="container bind-scroll-to-content">
                 <div class="docs-box container docs-left-show-menu">
                     <div class="docs-left-menu">
-                        @include('docs::layouts.docs.left-menu')
+                        @include('home::layouts.home-docs.left-menu')
                     </div>
                     <button type="button" class="show-menu docs-menu-btn-nav"></button>
                     <div class="docs-right-content">
@@ -81,6 +87,15 @@
 
 <script src="{{ asset('static/libs/zxf/js/my.min.js') }}" my-init='true'></script>
 <script src="{{ asset('static/inspinia/js/home-docs-menu.js') }}"></script>
+
+
+{{--右键文档--}}
+<script src="{{ asset('static/libs/zxf/js/mouseRight.min.js') }}" ></script>
+{{--<script type="text/javascript" src="{{ asset('static/libs/flavr/flavr/js/flavr.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ asset('static/libs/zxf/js/flavr.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ asset('static/document/js/docs_handle.min.js') }}" ></script>--}}
+<script type="text/javascript" src="{{ asset('static/libs/zxf/js/docs/docs_handle.js') }}" ></script>
+
 
 @section('page_js')
     <!-- 页面中引入page js -->
