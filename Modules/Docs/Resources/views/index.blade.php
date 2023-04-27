@@ -75,7 +75,9 @@
         text-align: center;
         color: whitesmoke;
         background-color: whitesmoke;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1), 0 4px 4px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.1);
+        /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1), 0 4px 4px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.1);*/
+
+        box-shadow: 7px 10px 3px #333;
     }
     @media (max-width: 768px) {
         .docs-card {
@@ -226,42 +228,42 @@
 
 @section('content')
     <div class="docs-list-content">
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">Mountain View</h2>
                 <p class="docs-card-copy">Check out all of these gorgeous mountain trips with beautiful views of, you guessed it, the mountains</p>
                 <button class="docs-card-btn">View Trips</button>
             </div>
         </div>
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">To The Beach</h2>
                 <p class="docs-card-copy">Plan your next beach trip with these fabulous destinations</p>
                 <button class="docs-card-btn">View Trips</button>
             </div>
         </div>
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">Desert Destinations</h2>
                 <p class="docs-card-copy">It's the desert you've always dreamed of</p>
                 <button class="docs-card-btn">Book Now</button>
             </div>
         </div>
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">Explore The Galaxy</h2>
                 <p class="docs-card-copy">Seriously, straight up, just blast off into outer space today</p>
                 <button class="docs-card-btn">Book Now</button>
             </div>
         </div>
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">Explore The Galaxy</h2>
                 <p class="docs-card-copy">Seriously, straight up, just blast off into outer space today</p>
                 <button class="docs-card-btn">Book Now</button>
             </div>
         </div>
-        <div class="docs-card">
+        <div class="docs-card" style="background-image: url({{ asset('static/images/docs/1003-236x350.jpg') }});">
             <div class="docs-content">
                 <h2 class="docs-card-title">Explore The Galaxy</h2>
                 <p class="docs-card-copy">Seriously, straight up, just blast off into outer space today</p>
