@@ -9,7 +9,7 @@
 默认使用 browserCacheFile.load 方法区定义加载
 <script src="./browser_cache/browser_cache_file.js" type="text/javascript" charset="utf-8" ></script>
 
-设置了 auto_cache_file 并且值为 true 时候会自动缓存已经加载的资源文件
+设置了 auto_cache_file 为 true 时候会自动缓存网页中的资源文件
 <script src="./browser_cache/browser_cache_file.js" type="text/javascript" charset="utf-8" auto_cache_file="true"></script>
 ```
 

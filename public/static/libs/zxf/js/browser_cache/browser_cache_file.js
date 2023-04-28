@@ -6,16 +6,42 @@
 var browserCacheFile = {
     cache: {},
     loadScript: function (url, callback) {
+        // 方法一 可能存在跨域
         var script = document.createElement("script");
+        script.type = "text/javascript";
+        if (script.readyState) {  // IE
+            script.onreadystatechange = function() {
+                if (script.readyState === "loaded" || script.readyState === "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else {  // Others
+            script.onload = function() {
+                callback();
+            };
+        }
         script.src = url;
-        script.onload = callback;
         document.body.appendChild(script);
     },
     loadStyle: function (url, callback) {
+        // 方法一 可能存在跨域
         var link = document.createElement("link");
         link.rel = "stylesheet";
+        link.type = 'text/css';
+        if (link.readyState) {  // IE
+            link.onreadystatechange = function() {
+                if (link.readyState === "loaded" || link.readyState === "complete") {
+                    link.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else {  // Others
+            link.onload = function() {
+                callback();
+            };
+        }
         link.href = url;
-        link.onload = callback;
         document.head.appendChild(link);
     },
     loadImage: function (url, callback) {
@@ -23,10 +49,10 @@ var browserCacheFile = {
         img.src = url;
         img.onload = callback;
     },
-    loadFont: function (url, fontFamily = "custom-family", callback) {
+    loadFont: function (url, fontFamily , callback) {
         var style = document.createElement("style");
         style.type = "text/css";
-        style.textContent = "@font-face { font-family: " + fontFamily + "; src: url(" + url + "); }";
+        style.textContent = "@font-face { font-family: " + (fontFamily || 'custom-family') + "; src: url(" + url + "); }";
         style.onload = callback;
         document.head.appendChild(style);
     },
@@ -36,13 +62,21 @@ var browserCacheFile = {
         audio.src = url;  //音乐的路径
         audio.onload = callback;
     },
-    loadResource: function (url, callback, sourceItme = "") {
+    loadResource: function (url, callback, sourceItme) {
         if (browserCacheFile.cache[url]) {
             // 如果缓存存在，则直接使用缓存
             callback();
         } else {
+            var ext;
             // 如果缓存不存在，则进行加载和缓存
-            var ext = url.split(".").pop();
+            if (url && url.length > 0) {
+                // 截取 再拼接新的字符串
+                url = url.split("?")[0];
+                ext = url.split(".").pop();
+            } else {
+                return false;
+            }
+
             switch (ext) {
                 case "js":
                     browserCacheFile.loadScript(url, function () {
@@ -57,7 +91,7 @@ var browserCacheFile = {
                     });
                     break;
                 case "ttf":
-                    browserCacheFile.loadFont(url, sourceItme.fontFamily, function () {
+                    browserCacheFile.loadFont(url, (sourceItme.fontFamily || ""), function () {
                         browserCacheFile.cache[url] = true;
                         callback();
                     });
@@ -78,7 +112,6 @@ var browserCacheFile = {
                     });
                     break;
                 default:
-                    console.error("不支持的文件格式(." + ext + "):[" + url + "]");
                     callback();
             }
         }
@@ -98,6 +131,7 @@ var browserCacheFile = {
             browserCacheFile.loadResource(resource.url, done, resource);
         }
     },
+    // 推荐使用 loadResource
     loadModule: function (url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
@@ -127,6 +161,41 @@ var browserCacheFile = {
             browserCacheFile.loadResource(module.url, done, modules);
         }
     },
+    getTtfFiles: function () {
+        // 首先获取页面中的所有样式表，
+        // 然后遍历每个样式表中的所有规则，找到type为CSSRule.FONT_FACE_RULE的规则，即为@font-face规则。
+        // 接着获取规则中的字体文件URL，即为字体文件的URL。
+        // 最终将所有字体文件的URL存储在fontUrls数组中。
+        var fontFaceRules = [];
+        // 获取所有的样式表
+        var styleSheets = document.styleSheets;
+        for (var i = 0; i < styleSheets.length; i ++) {
+            // 获取每个样式表中的所有规则
+            try {
+                var rules = styleSheets[i].cssRules || styleSheets[i].rules;
+                for (var j = 0; j < rules.length; j ++) {
+                    // 判断规则是否为@font-face规则
+                    if (rules[j].type === CSSRule.FONT_FACE_RULE) {
+                        fontFaceRules.push(rules[j]);
+                    }
+                }
+            } catch (err) {
+                //在此处理错误
+            }
+        }
+
+        var fontUrls = [];
+        // 遍历所有的@font-face规则
+        for (var k = 0; k < fontFaceRules.length; k ++) {
+            // 获取规则中的字体文件URL
+            var fontSrc = fontFaceRules[k].style.getPropertyValue("src");
+            var fontUrl = fontSrc.match(/url\((.*?)\)/)[1];
+            // 除去首尾的引号
+            fontUrl = fontUrl.replace(/^['|"](.*)['|"]$/, "$1");
+            fontUrls.push(fontUrl);
+        }
+        return fontUrls;
+    },
     // 获取额外参数
     getArgs: function (attr_name) {
         var script = document.getElementsByTagName("script");
@@ -143,6 +212,24 @@ var browserCacheFile = {
             }
         }
         return attr_val;
+    },
+    // 检查是否需要自动缓存网页资源文件
+    checkAutoCacheFile: function () {
+        var auto_cache_file = browserCacheFile.getArgs("auto_cache_file");
+        if (auto_cache_file && auto_cache_file === "true") {
+            var all_files = [];
+            Array.from(window.performance.getEntriesByType("resource")).map(
+                function (x) {//遍历
+                    if (["script", "img", "link"].includes(x.initiatorType)) {
+                        all_files.push(x.name);
+                    }
+                }
+            );
+            // 获取ttf
+            all_files = all_files.concat(browserCacheFile.getTtfFiles());
+            // 自动缓存文件
+            browserCacheFile.load(all_files, [], function () {});
+        }
     },
     load: function (resources, modules, callback) {
         browserCacheFile.loadResources(resources, function () {
@@ -165,21 +252,5 @@ function require(deps, callback) {
     }
     callback.apply(null, args);
 }
-
-var auto_cache_file = browserCacheFile.getArgs("auto_cache_file");
-if (auto_cache_file && typeof (auto_cache_file) !== "undefined") {
-    if (auto_cache_file == "true") {
-        var all_js = [];
-        Array.from(window.performance.getEntriesByType("resource")).map(
-            function (x) {//遍历
-                if (x.initiatorType == "script") {
-                    all_js.push(x.name);
-                }
-                //TODO css img
-                // if(x.initiatorType=="link"){
-                //     console.log(x)
-                // }
-            }
-        );
-    }
-}
+// 检查是否自动缓存加载的文件
+browserCacheFile.checkAutoCacheFile();
