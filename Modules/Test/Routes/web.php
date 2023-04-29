@@ -1,5 +1,8 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
+use \Modules\Test\Http\Controllers\Web;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('test')->group(function() {
+Route::prefix('test')->group(function () {
     Route::get('/', 'TestController@index');
+
+    Route::get('lang', [Web\TestController::class, 'lang']);
+
+    Route::get('table', [Web\TestController::class, 'table']);
+    Route::get('table/get_list', [Web\TestController::class, 'getTableList']);
 });

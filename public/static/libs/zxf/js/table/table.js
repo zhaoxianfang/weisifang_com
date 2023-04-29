@@ -55,11 +55,11 @@ var Table = {
         strictSearch: false, //是否全局匹配,false模糊匹配
         idField: "id", //定义id字段
         icons: {
-            refresh: "glyphicon-refresh",
-            toggle: "glyphicon-list-alt",
-            columns: "glyphicon-list",
-            export: "glyphicon-download-alt", //glyphicon-export,
-            fullscreen: 'glyphicon-resize-full'
+            refresh: "fa-refresh",
+            toggle: "fa-list-alt",
+            columns: "fa-list",
+            export: "fa-download-alt", //fa-export,
+            fullscreen: 'fa-resize-full'
         },
         titleForm: '', //为空则不显示标题，不定义默认显示：普通搜索
         idTable: 'commonTable',
@@ -173,7 +173,7 @@ var Table = {
         getOptions: function(table) {
             try {
                 //放在前面优先判断
-                //table 1.12 新增 bootstrapVersion 
+                //table 1.12 新增 bootstrapVersion
                 if (typeof $.fn.bootstrapTable.utils.bootstrapVersion === 'undefined') {
                     return table.bootstrapTable('getOptions');
                 }

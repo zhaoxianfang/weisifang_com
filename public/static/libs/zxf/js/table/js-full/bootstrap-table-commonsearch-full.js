@@ -229,7 +229,7 @@
         }
     });
     $.extend($.fn.bootstrapTable.defaults.icons, {
-        commonSearchIcon: 'fa glyphicon-search fa-search'
+        commonSearchIcon: 'fa fa-search fa-search'
     });
     $.extend($.fn.bootstrapTable.Constructor.EVENTS, {
         'common-search.bs.table': 'onCommonSearch',
