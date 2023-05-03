@@ -20,3 +20,6 @@
 ## 替换 tex-svg.js 路径
 原路径 `https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js`
 现地址 TODO
+
+## 为了减少echarts 的体积，进行echarts在线定制功能模块
+https://echarts.apache.org/zh/builder.html
