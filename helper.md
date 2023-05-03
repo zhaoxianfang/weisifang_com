@@ -380,3 +380,11 @@ zh-CN/abc.php
 //      {{ __('test::abc.welcome', ['name' => '张三'])  }}
 ```
 
+
+
+
+## 多模块
+清理路由和配置
+```
+php artisan optimize
+```

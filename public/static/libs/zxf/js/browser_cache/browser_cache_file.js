@@ -10,14 +10,14 @@ var browserCacheFile = {
         var script = document.createElement("script");
         script.type = "text/javascript";
         if (script.readyState) {  // IE
-            script.onreadystatechange = function() {
+            script.onreadystatechange = function () {
                 if (script.readyState === "loaded" || script.readyState === "complete") {
                     script.onreadystatechange = null;
                     callback();
                 }
             };
         } else {  // Others
-            script.onload = function() {
+            script.onload = function () {
                 callback();
             };
         }
@@ -28,16 +28,16 @@ var browserCacheFile = {
         // 方法一 可能存在跨域
         var link = document.createElement("link");
         link.rel = "stylesheet";
-        link.type = 'text/css';
+        link.type = "text/css";
         if (link.readyState) {  // IE
-            link.onreadystatechange = function() {
+            link.onreadystatechange = function () {
                 if (link.readyState === "loaded" || link.readyState === "complete") {
                     link.onreadystatechange = null;
                     callback();
                 }
             };
         } else {  // Others
-            link.onload = function() {
+            link.onload = function () {
                 callback();
             };
         }
@@ -49,10 +49,10 @@ var browserCacheFile = {
         img.src = url;
         img.onload = callback;
     },
-    loadFont: function (url, fontFamily , callback) {
+    loadFont: function (url, fontFamily, callback) {
         var style = document.createElement("style");
         style.type = "text/css";
-        style.textContent = "@font-face { font-family: " + (fontFamily || 'custom-family') + "; src: url(" + url + "); }";
+        style.textContent = "@font-face { font-family: " + (fontFamily || "custom-family") + "; src: url(" + url + "); }";
         style.onload = callback;
         document.head.appendChild(style);
     },
@@ -61,6 +61,30 @@ var browserCacheFile = {
         audio.controls = true;  //这样控件才能显示出来
         audio.src = url;  //音乐的路径
         audio.onload = callback;
+    },
+    loadTxt: function (url, callback) {
+        var xhr = window.XMLHttpRequest
+            ? new XMLHttpRequest()
+            : new ActiveXObject("Microsoft.XMLHTTP");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 0)) {
+                callback && callback(xhr.responseText);
+            }
+        };
+
+        xhr.open("GET", url, true);
+        xhr.send(null);
+    },
+    loadJson: function (url, callback) {
+        browserCacheFile.loadText(url, function (text) {
+            try {
+                var json = JSON.parse(text);
+                callback && callback(json);
+            } catch (e) {
+                throw new Error("Invalid JSON format: " + url);
+            }
+        });
     },
     loadResource: function (url, callback, sourceItme) {
         if (browserCacheFile.cache[url]) {
@@ -92,6 +116,18 @@ var browserCacheFile = {
                     break;
                 case "ttf":
                     browserCacheFile.loadFont(url, (sourceItme.fontFamily || ""), function () {
+                        browserCacheFile.cache[url] = true;
+                        callback();
+                    });
+                    break;
+                case "txt":
+                    browserCacheFile.loadTxt(url, (sourceItme.fontFamily || ""), function () {
+                        browserCacheFile.cache[url] = true;
+                        callback();
+                    });
+                    break;
+                case "json":
+                    browserCacheFile.loadJson(url, (sourceItme.fontFamily || ""), function () {
                         browserCacheFile.cache[url] = true;
                         callback();
                     });
@@ -131,18 +167,18 @@ var browserCacheFile = {
             browserCacheFile.loadResource(resource.url, done, resource);
         }
     },
-    // 推荐使用 loadResource
+    // 推荐使用 loadResource,避免使用eval函数
     loadModule: function (url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var res = xhr.responseText;
-                eval(res);
-                callback();
-            }
-        };
-        xhr.send();
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("GET", url, true);
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4 && xhr.status === 200) {
+        //         var res = xhr.responseText;
+        //         eval(res);
+        //         callback();
+        //     }
+        // };
+        // xhr.send();
     },
     loadModules: function (modules, callback) {
         var count = modules.length;
@@ -228,7 +264,8 @@ var browserCacheFile = {
             // 获取ttf
             all_files = all_files.concat(browserCacheFile.getTtfFiles());
             // 自动缓存文件
-            browserCacheFile.load(all_files, [], function () {});
+            browserCacheFile.load(all_files, [], function () {
+            });
         }
     },
     load: function (resources, modules, callback) {
@@ -252,5 +289,6 @@ function require(deps, callback) {
     }
     callback.apply(null, args);
 }
+
 // 检查是否自动缓存加载的文件
 browserCacheFile.checkAutoCacheFile();
