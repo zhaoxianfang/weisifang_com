@@ -55,9 +55,9 @@ var customMenuA = Cherry.createMenuHook('加粗斜体',  {
 /**
  * 定义一个空壳，用于自行规划cherry已有工具栏的层级结构
  */
-var customMenuB = Cherry.createMenuHook('实验室',  {
-  iconName: '',
-});
+// var customMenuB = Cherry.createMenuHook('实验室',  {
+//   iconName: '',
+// });
 /**
  * 定义一个自带二级菜单的工具栏
  */
@@ -165,27 +165,29 @@ var basicConfig = {
         insert: ['image', 'audio', 'video', 'link', 'hr', 'br', 'code', 'formula', 'toc', 'table', 'pdf', 'word', 'ruby'],
       },
       'graph',
-      'togglePreview',
-      'settings',
-      'switchModel',
-      'codeTheme',
+      'togglePreview', // 左右两栏编辑
+      // 'settings', // 设置
+      // 'switchModel', // 切换模式 预览左侧|预览右侧|返回编辑
+      // 'codeTheme', // 主题
       'export',
-      {
-        customMenuBName: ['ruby', 'audio', 'video', 'customMenuAName'],
-      },
+      // 实验室
+      // {
+      //   customMenuBName: ['ruby', 'audio', 'video', 'customMenuAName'],
+      // },
       'customMenuCName',
       'theme',
     ],
     toolbarRight: ['fullScreen', '|'],
     bubble: ['bold', 'italic', 'underline', 'strikethrough', 'sub', 'sup', 'quote', 'ruby', '|', 'size', 'color'], // array or false
+    // 侧边栏操作按钮
     sidebar: ['mobilePreview', 'copy', 'theme'],
     customMenu: {
       customMenuAName: customMenuA,
-      customMenuBName: customMenuB,
+      // customMenuBName: customMenuB, // 实验室
       customMenuCName: customMenuC,
     },
   },
-  drawioIframeUrl: './drawio_demo.html',
+  drawioIframeUrl: '/static/libs/cherry-markdown/examples/drawio_demo.html',
   editor: {
     defaultModel: 'edit&preview',
   },
@@ -205,7 +207,14 @@ var basicConfig = {
   }
 };
 
-fetch('./markdown/basic.md').then((response) => response.text()).then((value) => {
+// fetch('../markdown/basic.md').then((response) => response.text()).then((value) => {
+//   var config = Object.assign({}, basicConfig, { value: value });
+//   window.cherry = new Cherry(config);
+// });
+fetch('/static/libs/cherry-markdown/examples/markdown/basic.md').then((response) => response.text()).then((value) => {
   var config = Object.assign({}, basicConfig, { value: value });
   window.cherry = new Cherry(config);
 });
+
+// var config = Object.assign({}, basicConfig, { value: 'value' });
+// window.cherry = new Cherry(config);

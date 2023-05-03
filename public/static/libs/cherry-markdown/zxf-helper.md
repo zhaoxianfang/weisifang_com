@@ -4,6 +4,8 @@
 下载日期: 2023-05-03
 下载时的版本号：0.8.19
 
+github:https://github.com/Tencent/cherry-markdown
+
 ## 下载插件包后的操作：
     01、删除 除了.gitignore 之外的 全部隐藏文件
     02、删除 client(客户端) 文件夹
@@ -22,4 +24,5 @@
 现地址 TODO
 
 ## 为了减少echarts 的体积，进行echarts在线定制功能模块
+保持和examples 示例里面的相同版本号，当前为 4.6.0
 https://echarts.apache.org/zh/builder.html

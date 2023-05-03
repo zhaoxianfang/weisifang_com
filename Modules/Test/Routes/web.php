@@ -19,6 +19,12 @@ Route::prefix('test')->group(function () {
 
     Route::get('lang', [Web\TestController::class, 'lang']);
 
+    // bootstrap 表格
     Route::get('table', [Web\TestController::class, 'table']);
+    Route::get('table/get_list', [Web\TestController::class, 'getTableList']);
+
+    // 编辑器
+    Route::get('editor', [Web\EditorController::class, 'index']);
+
     Route::get('table/get_list', [Web\TestController::class, 'getTableList']);
 });
