@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Docs\Entities\DocsDoc;
+use Modules\Docs\Observers\DocsDocObserver;
 use Modules\Users\Entities\User;
 use Modules\Users\Observers\UserObserver;
 
@@ -29,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
     protected function bootObservers()
     {
         User::observe(UserObserver::class);
+        DocsDoc::observe(DocsDocObserver::class);
     }
 }

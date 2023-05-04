@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Modules\Logs\Entities\SystemLog;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 use function config;
 use function response;
@@ -68,10 +69,27 @@ class CustomHandler extends Handler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            // $msg = 'Entry for '.str_replace('App\\', '', $exception->getModel()).' not found';
+            if ($request->is('api/*') || !$request->isMethod('get')) {
+                return response()->json([
+                    'code'    => 404,
+                    'message' => '页面不存在',
+                ]);
+            }
+            $errorView = view()->exists("errors::404") ? ('errors.404') : 'errors.404';
+            return response()->view($errorView, [
+                'message' => '页面不存在',
+            ]);
+        }
         // 如果模块下定义了自定义的异常接管类 Handler，则交由模块下的异常类自己处理
         $modulesExceptions = 'Modules\\' . ucwords(get_module_name()) . '\Exceptions\Handler';
-        if (class_exists($modulesExceptions)) {
-            return call_user_func_array([new $modulesExceptions($this->container), 'render'], [$request, $exception]);
+        if (class_exists($modulesExceptions) && method_exists($modulesExceptions, 'render')) {
+            try {
+                return call_user_func_array([new $modulesExceptions($this->container), 'render'], [$request, $exception]);
+            } catch (\Exception $err) {
+                SystemLog::writeErr($err);
+            }
         }
 
         if (config('app.debug')) {
@@ -108,21 +126,26 @@ class CustomHandler extends Handler
      */
     public function report(Throwable $e)
     {
+        if ($e instanceof ModelNotFoundException) {
+            return false;
+        }
+
         try {
-            $userId = (int)get_user_info('id');
+
+            SystemLog::writeErr($e);
+
             // 判断异常是否需要自定义报告...
             if (empty(trim($e->getMessage()))) {
                 // 没有报错信息的就直接跳过了
                 return true;
             }
-            SystemLog::writeLog('系统异常', [
-                "异常信息："      => $e->getMessage(),   //返回用户自定义的异常信息
-                "异常代码："      => $e->getCode(),      //返回用户自定义的异常代码
-                "文件名："        => $e->getFile(),      //返回发生异常的PHP程序文件名
-                "异常代码所在行" => $e->getLine(),        //返回发生异常的代码所在行的行号
-                "传递路线"       => $e->getTrace(),      //返回发生异常的传递路线
-                // "传递路线"    => $e->getTraceAsString(),      //返回发生异常的传递路线
-            ], $userId, [], SystemLog::LEVEL_ERROR);
+
+            // 在记录完日志后判断： 如果模块下定义了自定义的异常接管类 Handler，则交由模块下的异常类自己处理
+            $modulesExceptions = 'Modules\\' . ucwords(get_module_name()) . '\Exceptions\Handler';
+            if (class_exists($modulesExceptions) && method_exists($modulesExceptions, 'report')) {
+                return call_user_func_array([new $modulesExceptions($this->container), 'report'], [$e]);
+            }
+
         } catch (\Exception $err) {
             // 写入本地文件日志
             Log::error($err->getMessage());

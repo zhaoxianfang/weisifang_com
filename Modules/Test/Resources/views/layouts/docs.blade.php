@@ -45,34 +45,21 @@
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom white-bg">
-            @include('docs::layouts.docs.top_nav')
+            @include('test::layouts.docs.top_nav')
         </div>
-
-        @hasSection('load_docs_left_menu')
-            {{-- 需要加载左侧菜单--}}
-            <div class="bind-scroll-to-content animated fadeInRight">
-                <div class="container bind-scroll-to-content">
-                    <div class="docs-box container docs-left-show-menu">
-                        <div class="docs-left-menu">
-                            @include('home::layouts.home-docs.left-menu')
-                        </div>
-                        <button type="button" class="show-menu docs-menu-btn-nav"></button>
-                        <div class="docs-right-content">
-                            @yield('content')
-                        </div>
+        <div class="bind-scroll-to-content animated fadeInRight">
+            <div class="container bind-scroll-to-content">
+                <div class="docs-box container docs-left-show-menu">
+                    <div class="docs-left-menu">
+                        @include('test::layouts.docs.left-menu')
+                    </div>
+                    <button type="button" class="show-menu docs-menu-btn-nav"></button>
+                    <div class="docs-right-content">
+                        @yield('content')
                     </div>
                 </div>
             </div>
-        @endif
-        @sectionMissing('load_docs_left_menu')
-            {{-- 默认不需要加载左侧菜单--}}
-            <div class="wrapper-0 wrapper-content-0 animated fadeInRight">
-                <div class="container white-bg">
-                    @yield('content')
-                </div>
-            </div>
-        @endif
-
+        </div>
         <div class="footer">
             <div class="float-right">
                 <a href="https://beian.miit.gov.cn/#" target="_blank" style="color: #676a6c;"> <strong>{{ empty( $sys['beian'] ) ? '滇ICP备16003347号-2': $sys['beian'] }}&nbsp;</strong></a>

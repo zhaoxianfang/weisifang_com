@@ -27,4 +27,7 @@ Route::prefix('test')->group(function () {
     Route::get('editor', [Web\EditorController::class, 'index']);
 
     Route::get('table/get_list', [Web\TestController::class, 'getTableList']);
+
+    // 文档
+    Route::get('docs', [Web\TestController::class, 'testDocs'])->name('test_docs');
 });

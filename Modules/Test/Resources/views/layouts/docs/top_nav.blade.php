@@ -13,21 +13,123 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="/docs" class="nav-link"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;&nbsp;广场</a>
+                    <a href="/docs" class="nav-link">广场</a>
                 </li>
-{{--                @if (!auth('web')->guest())--}}
-                    <li class="nav-item">
-                        <a href="/docs/my" class="nav-link"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;我的</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/docs/create" class="nav-link"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;新建</a>
-                    </li>
-{{--                @endif--}}
+                <li class="nav-item dropdown dropdown-hover">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+                        <li><a href="#" class="dropdown-item">Some action </a></li>
+                        <li><a href="#" class="dropdown-item">Some other action</a></li>
+
+                        <li class="dropdown-divider"></li>
+
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
+                                </li>
+
+                                <!-- Level three dropdown-->
+                                <li class="dropdown-submenu">
+                                    <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">level 2</a>
+                                    <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
+                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
+                                        <li><a href="#" class="dropdown-item">3rd level</a></li>
+                                    </ul>
+                                </li>
+                                <!-- End Level three -->
+
+                                <li><a href="#" class="dropdown-item">level 2</a></li>
+                                <li><a href="#" class="dropdown-item">level 2</a></li>
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown dropdown-hover" style="">
+                    <a id="dropdownToolsMenu" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">在线工具</a>
+                    <ul aria-labelledby="dropdownToolsMenu" class="dropdown-menu border-0 shadow dropdown-megamenu" style="left: 0px; right: inherit;">
+                        <div class="row">
+                            <div class="col-sm-8">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">字符、文本</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/code_minify">JS、CSS压缩</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/unicode">unicode编码转换</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/json">Json格式化</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/string/serialize">系列化和反系列化</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">图形图像</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/compressor">图片压缩/裁剪</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/qrcode#tab=1">QrCode 二维码</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/qrcode#tab=2">BarCode 条形码</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/create">TextToPNG 文字转图片</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/images/ico">favicon.ico制作</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">扩展</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="/tools/mysql/dictionary">MysqlTool 生成数据库字典</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5 class="font-size-14 mt-0 dropdown-item">其他</h5>
+                                        <ul class="list-unstyled megamenu-list">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0);">...</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div style="padding-top: 40px;">
+                                            <img src="{{ asset('static/inspinia/img/modules.png') }}" alt="" class="img-fluid mx-auto d-block" style="max-height: 180px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
             </ul>
 
             <!-- SEARCH FORM -->
             <form class="form-inline ml-0 ml-md-3  unbind-form nav-search-form" action="/docs/search"  method="get">
-                <div class="input-group input-group-sm nav-search-form-input-xxx">
+                <div class="input-group input-group-sm nav-search-form-input">
                     <input class="form-control form-control-navbar" type="search" placeholder="搜索..."  name="keyword" value=""  aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">

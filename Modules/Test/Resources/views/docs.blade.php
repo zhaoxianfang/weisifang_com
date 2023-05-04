@@ -1,4 +1,4 @@
-@extends('docs::layouts.docs')
+@extends('test::layouts.docs')
 
 <style type="text/css">
     /*@import url("https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap");*/

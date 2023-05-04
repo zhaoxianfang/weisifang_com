@@ -16,7 +16,6 @@ use Modules\Home\Http\Controllers\Web;
 
 Route::prefix('')->group(function () {
     Route::get('/', [Web\HomeController::class, 'index'])->name('home');
-    Route::get('test_docs', [Web\HomeController::class, 'testDocs'])->name('test_docs');
 });
 
 // 在线工具

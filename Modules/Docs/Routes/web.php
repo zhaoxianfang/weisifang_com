@@ -1,5 +1,8 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
+use \Modules\Docs\Http\Controllers\Web;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('docs')->group(function() {
-    Route::get('/', 'DocsController@index');
+Route::prefix('docs')->name('docs')->group(function () {
+    // 文档主页
+    Route::get('/', [Web\DocsController::class, 'index'])->name('docs_home');
+    // 创建文档
+    Route::get('create', [Web\DocsController::class, 'create'])->name('create');
+    // 某文档首页
+    Route::get('{docsApp}', [Web\DocsController::class, 'firstPage'])->name('doc_first_page');
+
 });

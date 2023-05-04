@@ -2,7 +2,9 @@
 
 namespace Modules\Logs\Entities;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class SystemLog extends Model
 {
@@ -80,6 +82,7 @@ class SystemLog extends Model
      * @param string       $level
      *
      * @return void
+     * @throws Exception
      */
     public static function writeLog(string $title = '', array|string $content = [], int|string $user_id = 0, array|string $extra = [], string $level = self::LEVEL_NOTICE)
     {
@@ -100,6 +103,26 @@ class SystemLog extends Model
             'user_agent' => $request->userAgent(),
             'level'      => $level,
         ]);
+    }
+
+    /**
+     * 统一记录抛出的异常错误信息
+     *
+     * @param Throwable $err 是 PHP7.0 开始出现的异常类，他是 \Error \Exception 的父类
+     *
+     * @throws Exception
+     */
+    public static function writeErr(Throwable $err)
+    {
+        $userId = (int)get_user_info('id');
+        self::writeLog('系统异常', [
+            "异常信息："   => $err->getMessage(),   //返回用户自定义的异常信息
+            "异常代码："   => $err->getCode(),      //返回用户自定义的异常代码
+            "文件名："    => $err->getFile(),      //返回发生异常的PHP程序文件名
+            "异常代码所在行" => $err->getLine(),        //返回发生异常的代码所在行的行号
+            "传递路线"    => $err->getTrace(),      //返回发生异常的传递路线
+            // "传递路线"    => $e->getTraceAsString(),      //返回发生异常的传递路线
+        ], $userId, [], self::LEVEL_ERROR);
     }
 
 }
