@@ -964,7 +964,7 @@
                     elementName = $(".my-backtotop");
                     $(elementName).css({
                         "position": "fixed",
-                        "bottom": "40px",
+                        "bottom": "50px",
                         "right": "40px",
                         "z-index": "9999",
                         "width": "33px",
@@ -976,7 +976,8 @@
                         "font-size": "21px",
                         "color": "#00abff",
                         "border-radius": "50%",
-                        "opacity": 0.4
+                        "opacity": 0.4,
+                        "display": 'none',
                     });
                     $(elementName).hover(function () {
                         $(this).css({
@@ -984,40 +985,24 @@
                         });
                     });
                 }
-
-                function Debouncer(callback) {
-                    this.callback = callback;
-                    this.ticking = false;
-                }
-
-                Debouncer.prototype = {
-                    update: function () {
-                        this.callback && this.callback();
-                        this.ticking = false;
-                    },
-                    requestTick: function () {
-                        if ( !this.ticking) {
-                            requestAnimationFrame(this.rafCallback || (this.rafCallback = $.proxy(this.update, this)));
-                        }
-                        this.ticking = true;
-                    },
-                    handleEvent: function () {
-                        this.requestTick();
-                    }
-                };
                 var $el = $(elementName),
                     offset = 100;
-                var debouncer = new Debouncer(function () {
-                    if ($(window).scrollTop() > offset) {
+                var scrollDom = document.body; // 被滚动对象
+                window.addEventListener("scroll", function (event) {
+                    scrollDom = event.target;
+                    const top = document.documentElement.scrollTop || document.body.scrollTop || $(window).scrollTop() || event.target.scrollTop;
+                    if (top > offset) {
                         $el.fadeIn();
                     } else {
                         $el.fadeOut();
                     }
-                });
-                window.addEventListener("scroll", debouncer, false);
-                debouncer.handleEvent();
+                }, true);
+
                 $el.on("click", function () {
                     $("html, body").animate({
+                        scrollTop: 0
+                    }, 700);
+                    $(scrollDom).animate({
                         scrollTop: 0
                     }, 700);
                 });
