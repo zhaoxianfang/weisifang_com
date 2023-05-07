@@ -39,7 +39,7 @@
 </svg>
 <div class="message-box">
     <h1>503</h1>
-    <p>[威四方]提示您,服务器繁忙！</p>
+    <p>[威四方]提示您,@if(!empty($message) ) {{ $message }} @else 服务器繁忙！ @endif</p>
     <div class="buttons-con">
         <div class="action-link-wrap">
             <a onClick="history.back(-1)" class="link-button link-back-button">返回上一页</a>

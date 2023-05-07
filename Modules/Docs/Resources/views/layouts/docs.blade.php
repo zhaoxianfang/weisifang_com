@@ -54,7 +54,7 @@
                 <div class="container bind-scroll-to-content">
                     <div class="docs-box container docs-left-show-menu">
                         <div class="docs-left-menu">
-                            @include('home::layouts.home-docs.left-menu')
+                            @include('docs::layouts.docs.left-menu')
                         </div>
                         <button type="button" class="show-menu docs-menu-btn-nav"></button>
                         <div class="docs-right-content">
@@ -109,6 +109,8 @@
 {{--<script type="text/javascript" src="{{ asset('static/libs/zxf/js/flavr.min.js') }}"></script>--}}
 {{--<script type="text/javascript" src="{{ asset('static/document/js/docs_handle.min.js') }}" ></script>--}}
 <script type="text/javascript" src="{{ asset('static/libs/zxf/js/docs/docs_handle.js') }}" ></script>
+
+<script type="text/javascript" src="{{ asset('static/libs/zxf/js/browser_cache/browser_cache_file.min.js') }}" charset="utf-8" auto_cache_file="true"></script>
 
 
 @section('page_js')

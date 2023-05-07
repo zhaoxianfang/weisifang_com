@@ -39,7 +39,7 @@
 </svg>
 <div class="message-box">
     <h1>500</h1>
-    <p>[威四方]提示您,认证超时！</p>
+    <p>[威四方]提示您,@if(!empty($message) ) {{ $message }} @else 认证超时！ @endif</p>
     <div class="buttons-con">
         <div class="action-link-wrap">
             <a onClick="history.back(-1)" class="link-button link-back-button">返回上一页</a>

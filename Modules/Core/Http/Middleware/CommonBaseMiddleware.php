@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Modules\Logs\Entities\SystemLog;
-use function config;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommonBaseMiddleware
 {
@@ -37,4 +37,13 @@ class CommonBaseMiddleware
         return $response;
 
     }
+
+    /**
+     * 在响应发送到浏览器后处理任务。
+     */
+    public function terminate(Request $request, Response $response): void
+    {
+        // TODO
+    }
+
 }

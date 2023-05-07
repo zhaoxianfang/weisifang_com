@@ -34,6 +34,12 @@ body.top-navigation{
     float: left;
     position: relative
 }
+.docs-menu-box li,.docs-menu-box li>a {
+    /*border 不占宽度*/
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+}
 
 .docs-menu-box ul li a {
     width: 100%;
@@ -52,7 +58,7 @@ body.top-navigation{
 
 .docs-menu-box > ul > li.active > a, .docs-menu-box > ul > li:hover > a {
     color: #fff;
-    background: #3b424d
+    background: #3b424d;
 }
 
 .docs-menu-box > ul > li > a {
@@ -71,6 +77,9 @@ body.top-navigation{
     width: 100%;
     display: none;
     position: static
+}
+.docs-menu-box ul.submenu.active{
+    display: block;
 }
 
 .docs-menu-box ul ul.submenu li {
@@ -93,8 +102,8 @@ body.top-navigation{
     color: #555 !important;
 }
 
-.docs-menu-box ul ul.submenu li:hover > a {
-    border-left-color: #414956
+.docs-menu-box > ul.submenu > li:hover > a {
+    border-left: solid 6px #1ab394;
 }
 
 .docs-menu-box ul ul.submenu > li > a {
@@ -133,8 +142,9 @@ body.top-navigation{
     color: #555
 }
 
-.white.docs-menu-box > ul > li.active > a, .white.docs-menu-box > ul > li:hover > a {
-    background: #f0f0f0
+.white.docs-menu-box  ul > li.active > a, .white.docs-menu-box  ul > li:hover > a {
+    background: #f0f0f0;
+    border-left-color: #1ab394;
 }
 
 .white.docs-menu-box > ul > li > a {
@@ -142,7 +152,7 @@ body.top-navigation{
 }
 
 .white.docs-menu-box ul ul.submenu li:hover > a {
-    border-left-color: #f0f0f0
+    border-left-color: #1ab394;
 }
 
 .white.docs-menu-box ul ul.submenu li a {
@@ -154,7 +164,7 @@ body.top-navigation{
 }
 
 .black.docs-menu-box > ul > li.active > a, .black.docs-menu-box > ul > li:hover > a {
-    background: #222
+    background: #222;
 }
 
 .black.docs-menu-box > ul > li > a {

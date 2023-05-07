@@ -16,13 +16,15 @@ class WebBaseController extends BaseController
      *
      * @param string $message
      * @param int    $code
-     *
-     * @throws Exception
+     * @param string $url
+     * @param int    $wait
      */
-    public function error(string $message = '出错啦！', int $code = 500)
+    public function error(string $message = '出错啦！', int $code = 500, string $url = '', int $wait = 3)
     {
         // throw new Exception($message, $code);
-        return die(response()->json(compact('code', 'message'), $code)->send());
+        // return response()->json(compact('code', 'message', 'url', 'wait'), 200)->send();
+        // return die(response()->json(compact('code', 'message', 'url', 'wait'), 200)->send());
+        return response()->json(compact('code', 'message', 'url', 'wait'), 200);
     }
 
     /**
@@ -56,20 +58,33 @@ class WebBaseController extends BaseController
     }
 
     /**
-     * 检查是否登录 web,如果已经登录则返回 true
+     * 检查用户登录状态，游客需要提示先登录
      *
      * @return bool|JsonResponse|Response
      */
-    public function checkLogin()
+    public function guestToAuth()
     {
-        $this->user = auth('web')->guest() ? null : auth('web')->user();
-        if (!$this->user) {
+        if (empty($this->user)) {
+            $module   = underline_convert(get_module_name());// 使用小写下划线模块名称
+            $authPath = url('/' . $module . '/auth/login');
             if (request()->ajax()) {
-                return response()->json(['code' => 401, 'message' => '请先登录后再试', 'url' => url('/' . get_module_name() . '/auth/login')], 401);
+                return $this->error('请先登录后再进行此操作！', 401, $authPath);
             } else {
-                return $this->showTipsBtnPage($tips = '请先登录后再试！', url('/' . get_module_name() . '/auth/login'));
+                $viewPath = $module . '::tips/info';
+                if (!View::exists($viewPath)) {
+                    return response()->view("errors::401", [
+                        'message' => '请先登录后再进行此操作！',
+                    ])->send();
+                }
+                return response()->view($viewPath, [
+                    'info'        => '请先登录后再进行此操作！',
+                    'desc'        => '提示：该操作需要登录后才能进行,请按照提示先进行登录',
+                    'url'         => $authPath,
+                    'btn_text'    => '立即登录',
+                    'module_name' => $module,
+                ], 200)->header('Content-Type', 'text/html')->send();
             }
         }
-        return true;
+        return false;
     }
 }

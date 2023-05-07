@@ -13,13 +13,13 @@ class Compressor extends HomeBase
         if ($this->request->isMethod('post')) {
 
             if (!$this->request->hasFile('images_file')) {
-                $this->error('未选择图片', 401);
+                return $this->error('未选择图片', 401);
             }
             $file = $this->request->file('images_file');
 
             //验证是否上传成功
             if (!$file->isValid()) {
-                $this->error('图片上传失败', 404);
+                return $this->error('图片上传失败', 404);
             }
             $oldSize = $file->getSize();
 

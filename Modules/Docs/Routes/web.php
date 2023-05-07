@@ -18,8 +18,9 @@ Route::prefix('docs')->name('docs')->group(function () {
     // 文档主页
     Route::get('/', [Web\DocsController::class, 'index'])->name('docs_home');
     // 创建文档
-    Route::get('create', [Web\DocsController::class, 'create'])->name('create');
+    Route::get('create', [Web\DocsAppController::class, 'create'])->name('create');
+    Route::post('create', [Web\DocsAppController::class, 'store'])->name('store');
     // 某文档首页
-    Route::get('{docsApp}', [Web\DocsController::class, 'firstPage'])->name('doc_first_page');
+    Route::get('{docsApp}', [Web\DocsAppController::class, 'firstPage'])->name('doc_first_page');
 
 });

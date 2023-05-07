@@ -1,84 +1,44 @@
 {{--{-- white 或者默认黑色 --}}
 <div class="docs-menu-box white" id="docs-left-menus-box">
-    <div class="docs-menu-box-header">
-        Header
-    </div>
+{{--    <div class="docs-menu-box-header">--}}
+{{--        Header--}}
+{{--    </div>--}}
     <ul>
-        {!! empty($left_menu_str)?'':$left_menu_str !!}
         <li class="active">
             <a class="docs-menu-item" href="#">
-                Home
+                文件信息
             </a>
-        </li>
-        <li>
-            <a class="docs-menu-item" href="#">
-                Events
-            </a>
-        </li>
-        <li>
-            <a class="docs-menu-item" href="#">
-                Gallery
-            </a>
-            <span class="docs-menu-box-label">
-                12
-            </span>
-        </li>
-        <li>
-            <a class="docs-menu-item" href="#">
-                Services
-                <span class="docs-menu-box-label">+1</span>
-                <span class="custom-arrow custom-right-arrow"></span>
-            </a>
-            <ul class="submenu">
-                <li>
+            <ul @if($menu_active && in_array($menu_active,['create','update','doc_users','help'])) class="submenu active" @else class="submenu" @endif" >
+                @if($menu_active && $menu_active == 'create')
+                    <li class="active" >
+                        <a class="docs-menu-item" href="#">
+                            创建文档
+                        </a>
+                    </li>
+                @endif
+                @if($menu_active && $menu_active == 'update')
+                    <li class="active" >
+                        <a class="docs-menu-item" href="#">
+                            编辑文档
+                        </a>
+                    </li>
+                @endif
+                <li @if($menu_active && $menu_active == 'doc_users') class="active" @endif>
                     <a class="docs-menu-item" href="#">
-                        Web Design
+                        文档成员
                     </a>
+                    <span class="docs-menu-box-label">
+                        10
+                    </span>
                 </li>
-                <li>
+                <li @if($menu_active && $menu_active == 'help') class="active" @endif>
                     <a class="docs-menu-item" href="#">
-                        Hosting
-                    </a>
-                </li>
-                <li>
-                    <a class="docs-menu-item" href="#">
-                        Design
-                    </a>
-                    <ul class="submenu">
-                        <li>
-                            <a class="docs-menu-item" href="#">
-                                Graphics
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a class="docs-menu-item" href="#">
-                                Vectors -active
-                            </a>
-                        </li>
-                        <li>
-                            <a class="docs-menu-item" href="#">
-                                Photoshop
-                            </a>
-                        </li>
-                        <li>
-                            <a class="docs-menu-item" href="#">
-                                Fonts
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="docs-menu-item" href="#">
-                        Consulting
+                        使用手册
                     </a>
                 </li>
             </ul>
         </li>
-        <li>
-            <a class="docs-menu-item" href="#">
-                News
-            </a>
-        </li>
+        {!! empty($left_menu_str)?'':$left_menu_str !!}
         <li>
             <a class="docs-menu-item" href="#">
                 Portfolio
@@ -114,13 +74,11 @@
                 About
             </a>
         </li>
-        <li>
-            <a class="docs-menu-item" href="#">
-                Contact
-            </a>
-        </li>
     </ul>
-    <div class="docs-menu-box-footer test-close">
-        Footer  test Close
+    <div class="docs-menu-box-footer test-close text-center">
+        <button type="button" class="btn btn-outline btn-primary">
+            <i class="fa fa-plus"></i>
+            新建目录
+        </button>
     </div>
 </div>

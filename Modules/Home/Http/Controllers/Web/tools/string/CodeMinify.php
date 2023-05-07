@@ -14,7 +14,7 @@ class CodeMinify extends HomeBase
             $codeString = $this->request->input('code');
             $codeType   = $this->request->input('code_type', 'auto');
             if (empty($codeString)) {
-                $this->error('请填入需要压缩的代码', 412);
+                return $this->error('请填入需要压缩的代码', 412);
             }
             if ($codeType == 'js') {
                 $minifier = new min\JS($codeString);

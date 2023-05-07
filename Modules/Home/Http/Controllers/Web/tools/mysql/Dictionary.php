@@ -17,7 +17,7 @@ class Dictionary extends HomeBase
                 $tableStr = MysqlTool::dictionary($input['db_host'], $input['db_username'], $input['db_password'], $input['db_database']);
                 return $this->success(['table_str' => $tableStr], '转换成功', 200);
             } catch (Exception $e) {
-                $this->error($e->getMessage(), 500);
+                return $this->error($e->getMessage(), 500);
             }
         }
         return view('home::home.tools.mysql.dictionary', []);

@@ -18,22 +18,4 @@ class DocsController extends DocsBaseController
     {
         return view('docs::index');
     }
-
-    /**
-     * 创建文档
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('docs::apps.create');
-    }
-
-    /**
-     * 某文档首页
-     */
-    public function firstPage(DocsApp $docsApp)
-    {
-
-    }
 }

@@ -12,7 +12,7 @@ class Serialize extends HomeBase
         if ($this->request->isMethod('post')) {
             $codeString = $this->request->input('code');
             if (!$codeString) {
-                $this->error('请填入需要系列化的代码', 412);
+                return $this->error('请填入需要系列化的代码', 412);
             }
             try {
                 $fn     = 'unserialize';

@@ -39,7 +39,7 @@
 </svg>
 <div class="message-box">
     <h1>未获取登录授权</h1>
-    <p>[威四方]提示您,请先登录之后再访问此页面！</p>
+    <p>[威四方]提示您, @if(!empty($message) ) {{ $message }} @else 请先登录之后再访问此页面！ @endif</p>
     <div class="buttons-con">
         <div class="action-link-wrap">
             <a onClick="history.back(-1)" class="link-button link-back-button">返回上一页</a>
