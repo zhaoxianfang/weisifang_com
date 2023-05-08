@@ -382,9 +382,13 @@ zh-CN/abc.php
 
 
 
-
 ## 多模块
 清理路由和配置
 ```
 php artisan optimize
 ```
+
+## 配置服务器时间
+使用 `tzselect` 或者`/usr/bin/tzselect` 查看也选时区(只会给出提示，不会生效)
+
+你可以在`.profile`、`.bash_profile`或者`/etc/profile`中设置正确的TZ环境变量并导出。 例如在`.bash_profile`里面设置 `TZ='Asia/Shanghai'; export TZ;`并使其生效。
