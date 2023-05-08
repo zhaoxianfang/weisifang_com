@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('system_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->default(0)->comment('触发的用户ID(0表示系统)');
+            $table->string('module_name')->nullable()->comment('日志发生的模块名称');
             $table->string('title')->nullable()->comment('日志标题');
             $table->longText('context')->nullable()->comment('提示内容');
             $table->json('extra')->nullable()->comment('附加数据');

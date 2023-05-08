@@ -21,7 +21,10 @@ chown -R nobody.nobody /www/
 ```
 ### 项目目录下的 storage/framework/sessions 目录写数据会报无权限错误
 laravel file_put_contents(xxxx): Failed to open stream: Permission denied 
-解决(直接给文件夹设置777权限)：chmod -R 777 storage/framework/
+解决(直接给文件夹设置777权限)：
+```
+chmod -R 777 storage/framework/
+```
 
 ## 分页视图
 

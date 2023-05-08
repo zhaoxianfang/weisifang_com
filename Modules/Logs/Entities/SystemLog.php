@@ -95,13 +95,14 @@ class SystemLog extends Model
         // 请求数据
         $extra['params'] = $request->input();
         self::create([
-            'user_id'    => $user_id,
-            'title'      => $title,
-            'context'    => json_encode((array)$content),
-            'extra'      => $extra,
-            'source_ip'  => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'level'      => $level,
+            'user_id'     => $user_id,
+            'module_name' => underline_convert(get_module_name()),// 使用小写下划线模块名称,
+            'title'       => $title,
+            'context'     => json_encode((array)$content),
+            'extra'       => $extra,
+            'source_ip'   => $request->ip(),
+            'user_agent'  => $request->userAgent(),
+            'level'       => $level,
         ]);
     }
 
@@ -116,11 +117,11 @@ class SystemLog extends Model
     {
         $userId = (int)get_user_info('id');
         self::writeLog('系统异常', [
-            "异常信息："   => $err->getMessage(),   //返回用户自定义的异常信息
-            "异常代码："   => $err->getCode(),      //返回用户自定义的异常代码
-            "文件名："    => $err->getFile(),      //返回发生异常的PHP程序文件名
+            "异常信息："      => $err->getMessage(),   //返回用户自定义的异常信息
+            "异常代码："      => $err->getCode(),      //返回用户自定义的异常代码
+            "文件名："        => $err->getFile(),      //返回发生异常的PHP程序文件名
             "异常代码所在行" => $err->getLine(),        //返回发生异常的代码所在行的行号
-            "传递路线"    => $err->getTrace(),      //返回发生异常的传递路线
+            "传递路线"       => $err->getTrace(),      //返回发生异常的传递路线
             // "传递路线"    => $e->getTraceAsString(),      //返回发生异常的传递路线
         ], $userId, [], self::LEVEL_ERROR);
     }
