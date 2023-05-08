@@ -89,13 +89,13 @@
                             <hr class="my-1">
 
                             <div class="row text-center" style="padding: 15px 0 0;">
-                                <a href="/index/qqlogin" class="col-6">
+                                <a href="/docs/auth/qqlogin" class="col-6">
                                     <div style="padding-top:5px;">
                                         <h5><i class="icon fa fa-qq fa-lg mr-2 ri-qq-line"></i></h5>
                                         <p class="text-muted mb-2 font-size-12">QQ登录</p>
                                     </div>
                                 </a>
-                                <a href="/index/qqlogin" class="col-6">
+                                <a href="/docs/auth/qqlogin" class="col-6">
                                     <div style="padding-top:5px;">
                                         <h5><i class="icon fa fa-weibo fa-lg mr-2 ri-weibo-fill"></i></h5>
                                         <p class="text-muted mb-2 font-size-12">微博登录</p>
