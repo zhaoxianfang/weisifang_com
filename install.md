@@ -42,7 +42,10 @@ php artisan vendor:publish --tag=laravel-errors
 crontab -uroot -e
 
 ```
+默认
 * * * * * /usr/bin/php /www/weisifang_com/artisan schedule:run >> /dev/null 2>&1
+或者跟换你的php 路径
+* * * * * /usr/local/php8/bin/php /www/weisifang_com/artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## 重新加载composer

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Spider\Services\SpiderTasksService;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,7 +13,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // 爬虫自定义定时任务
+        SpiderTasksService::customCronTasks($schedule);
+
+        // 每 6小时 执行一次测试任务
+        $schedule->command('command:test')->everySixHours();
     }
 
     /**
