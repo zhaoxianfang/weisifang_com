@@ -3,7 +3,7 @@
 namespace Modules\Test\Console;
 
 use Illuminate\Console\Command;
-use Modules\System\Entities\Test;
+use Modules\Test\Entities\Test;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -44,7 +44,7 @@ class TestCommand extends Command
         $test = new Test();
         $test->fill([
             'title'   => '测试每6小时任务调度', // 'App req=>' . date('Y-m-d H:i:s'),
-            'content' => date('Y-m-d H:i:s')
+            'content' => date('Y-m-d H:i:s'),
         ]);
         $test->save();
     }
