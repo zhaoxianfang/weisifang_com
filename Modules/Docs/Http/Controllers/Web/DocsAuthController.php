@@ -43,9 +43,7 @@ class DocsAuthController extends DocsBaseController
     {
         // 判断来源url
         list($local, $referer) = source_local_website();
-        $url = url('docs/auth/callback', [
-            'source_url' => urlencode(($local && $referer) ? $referer : route('docs.home')),
-        ]);
+        $url = url('docs/auth/callback?source_url=' . urlencode(($local && $referer) ? $referer : route('docs.home')));
         return to_route('callback.tencent.login', ['callback_url' => urlencode($url)], 302);
     }
 
