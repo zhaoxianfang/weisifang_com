@@ -82,8 +82,8 @@ class DocsAuthController extends DocsBaseController
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 
-        // return redirect()->away($to); // 可跳转外部地址
+        return redirect()->away($to); // 可跳转外部地址
         // return to_route('docs.home', [], 302);
-        return redirect($to);
+        // return redirect($to);
     }
 }
