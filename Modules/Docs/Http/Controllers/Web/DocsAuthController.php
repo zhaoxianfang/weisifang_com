@@ -80,6 +80,7 @@ dump($user);
         }
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
+        dump(auth('web')->user());
 dd($to);
         return redirect($to);
         // return to_route('docs.home', [], 302);
