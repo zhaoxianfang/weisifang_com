@@ -16,6 +16,22 @@ class DocsController extends DocsBaseController
      */
     public function index()
     {
+        // 从 Session 获取数据 ...
+        $value = session('key');
+
+        // 设置默认值...
+        $value = session('key', 'default');
+
+        // 在Session 里存储一段数据 ...
+        session(['key' => 'value']);
+        dump($value);
+        $t = session('key');
+        dump($t);
+        dump(config('session'));
+
+        dump('docs home');
+        dump(auth('web')->guest());
+        dd(auth('web')->user());
         return view('docs::index');
     }
 }

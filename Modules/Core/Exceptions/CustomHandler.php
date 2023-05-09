@@ -126,6 +126,7 @@ class CustomHandler extends Handler
      */
     public function report(Throwable $e)
     {
+        dd($e);
         if ($e instanceof ModelNotFoundException) {
             return false;
         }
