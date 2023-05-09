@@ -132,8 +132,9 @@ class UserOrigin extends Model
         if (!$userOrigin) {
             $userOrigin = new UserOrigin();
         }
+        $userId = !empty($user) ? $user['id'] : (!empty($userOrigin) ? $userOrigin['user_id'] : null);
         $origin = $userOrigin->fill([
-            'user_id' => !empty($user) ? $user['id'] : null,
+            'user_id' => $userId ?? null,
             'open_id' => $openId ?? null,
             'source'  => $source,
 
@@ -153,7 +154,6 @@ class UserOrigin extends Model
         ]);
         $origin->save();
         $origin->refresh();
-
 
         return $origin;
     }

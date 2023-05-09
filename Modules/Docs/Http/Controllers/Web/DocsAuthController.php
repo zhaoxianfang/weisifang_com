@@ -71,7 +71,7 @@ class DocsAuthController extends DocsBaseController
     // 登录回调
     public function callback()
     {
-        $user = collect(request()->post())->except(['sys'])->toArray();
+        $user = collect(request()->all())->except(['sys'])->toArray();
 
         $remember = false; // 是否记住密码
         if (!auth('web')->loginUsingId($user['id'], $remember)) {
@@ -79,7 +79,7 @@ class DocsAuthController extends DocsBaseController
         }
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
-
+dd($to);
         return redirect($to);
         // return to_route('docs.home', [], 302);
 
