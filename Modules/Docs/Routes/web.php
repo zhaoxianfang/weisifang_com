@@ -22,7 +22,7 @@ Route::pattern('menu', '[0-9]+');
 |
 */
 
-Route::prefix('docs')->name('docs')->group(function () {
+Route::prefix('docs')->name('docs.')->group(function () {
     // 文档主页
     Route::get('/', [Web\DocsController::class, 'index'])->name('home');
     // apps 应用管理
@@ -47,6 +47,6 @@ Route::prefix('docs')->name('docs')->group(function () {
         Route::get('qqlogin', [Web\DocsAuthController::class, 'qqlogin'])->name('qqlogin');
         Route::get('weibologin', [Web\DocsAuthController::class, 'weibologin'])->name('weibologin');
 
-        Route::any('callback', [Web\DocsAuthController::class, 'callback'])->name('callback');
+        Route::post('callback', [Web\DocsAuthController::class, 'callback'])->name('callback');
     });
 });
