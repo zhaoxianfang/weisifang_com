@@ -84,11 +84,11 @@ class DocsAuthController extends DocsBaseController
 //        }
 
         // User 模型使用的是 Passport ，所以 Sanctum 的操作不一定全部生效
-        if (!auth('web')->loginUsingId($user['id'], $remember)) {
-            if ($toAuth = $this->guestToAuth()) {
-                return $toAuth;
-            }
-        }
+//        if (!auth('web')->loginUsingId($user['id'], $remember)) {
+//            if ($toAuth = $this->guestToAuth()) {
+//                return $toAuth;
+//            }
+//        }
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 
