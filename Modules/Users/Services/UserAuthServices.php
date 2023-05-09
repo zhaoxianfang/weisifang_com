@@ -321,7 +321,7 @@ class UserAuthServices extends BaseService
     /**
      * 第三方平台快速登录
      *
-     * @param string $loginSource 登录的第三方来源,例如 qq,sina
+     * @param string $loginSource 登录的第三方来源,例如 qq,sina 等
      * @param array  $userInfo
      *
      * @return array

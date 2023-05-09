@@ -3,7 +3,7 @@
 namespace Modules\Callback\Http\Controllers\Web\Tencent;
 
 use Modules\Callback\Http\Controllers\Web\CallbackController;
-use Modules\Users\Services\UserServices;
+use Modules\Users\Services\UserAuthServices;
 use zxf\login\QqOauth;
 
 /**
@@ -36,14 +36,22 @@ class Connect extends CallbackController
         return redirect()->away($url);
     }
 
+    /**
+     * 回调&通知
+     *
+     * @return string|void
+     * @throws \Exception
+     */
     public function notify()
     {
-        $auth        = new QqOauth(config('oauth.qq'));
+        $auth        = new QqOauth(config('tools.qq.web'));
         $userInfo    = $auth->getUserInfo('');
         $callbackUrl = $auth->getStateParam();
-        dd($userInfo);
         // 记录用户信息
-        $loginUserInfo = UserServices::instance()->fastLogin('qq', $userInfo);
+        $loginUserInfo = UserAuthServices::instance()->fastLogin('qq', $userInfo);
+        dump($userInfo);
+        dump($callbackUrl);
+        dd($loginUserInfo);
         if ($callbackUrl) {
             return buildRequestFormAndSend($callbackUrl, $loginUserInfo);
         } else {
