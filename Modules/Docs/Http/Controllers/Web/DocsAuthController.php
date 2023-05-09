@@ -72,9 +72,10 @@ class DocsAuthController extends DocsBaseController
     public function callback()
     {
         $user = collect(request()->all())->except(['sys'])->toArray();
-
+dump($user);
         $remember = false; // 是否记住密码
         if (!auth('web')->loginUsingId($user['id'], $remember)) {
+            dd(401);
             return response()->json(['error' => '账号或者密码错误'], 401);
         }
         $jump_url = request()->input('source_url', '');
