@@ -42,9 +42,11 @@ Route::prefix('docs')->name('docs')->group(function () {
         Route::get('register', [Web\DocsAuthController::class, 'register'])->name('register');
         Route::post('register', [Web\DocsAuthController::class, 'registerHandle']);
 
+        Route::any('logout', [Web\DocsAuthController::class, 'logout'])->name('logout');
+
         Route::get('qqlogin', [Web\DocsAuthController::class, 'qqlogin'])->name('qqlogin');
         Route::get('weibologin', [Web\DocsAuthController::class, 'weibologin'])->name('weibologin');
 
-        Route::post('callback', [Web\DocsAuthController::class, 'loggedIn']);
+        Route::post('callback', [Web\DocsAuthController::class, 'callback']);
     });
 });

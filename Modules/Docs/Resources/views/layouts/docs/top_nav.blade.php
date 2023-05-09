@@ -15,14 +15,14 @@
                 <li class="nav-item">
                     <a href="/docs" class="nav-link"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;&nbsp;广场</a>
                 </li>
-{{--                @if (!auth('web')->guest())--}}
+                @if (!auth('web')->guest())
                     <li class="nav-item">
                         <a href="/docs/my" class="nav-link"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;我的</a>
                     </li>
                     <li class="nav-item">
                         <a href="/docs/create" class="nav-link"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;新建</a>
                     </li>
-{{--                @endif--}}
+                @endif
             </ul>
 
             <!-- SEARCH FORM -->
@@ -69,39 +69,48 @@
             <li class="nav-item dropdown">
                 <!-- <div class=" d-inline-block user-dropdown"> -->
                 <a class="nav-link user-dropdown-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                    <img class="elevation-3 img-circle" src="{{ asset('static/inspinia/img/logo.png') }}" alt="Header Avatar" style="padding: 3px;height: 33px;margin-top: -6px;">
-                    <span class="brand-text font-weight-light header-user-name">登录</span>
-                    {{-- <span class="badge badge-warning navbar-badge user-logo-badge">15</span>--}}
+                    @if (auth('web')->guest())
+                        <img class="elevation-3 img-circle" src="{{ asset('static/inspinia/img/logo.png') }}" alt="Header Avatar" style="padding: 3px;height: 33px;margin-top: -6px;">
+                    @else
+                        <img class="elevation-3 img-circle" src="{{ auth('web')->user()->cover??asset('static/inspinia/img/logo.png') }}" alt="Header Avatar" style="padding: 3px;height: 33px;margin-top: -6px;">
+                        <span class="brand-text font-weight-light header-user-name">{{ auth('web')->user()->nickname??'无名' }}</span>
+                        {{-- <span class="badge badge-warning navbar-badge user-logo-badge">15</span>--}}
+                    @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-user" style="width:230px;">
                     <div class="card card-user">
                         <div class="card-body">
                             <div class="text-center">
-                                <img src="{{ asset('static/inspinia/img/logo.png') }}" alt="" class="avatar-logo avatar-sm" style="width: 70px;">
+                                <img src="{{ auth('web')->guest()?asset('static/inspinia/img/logo.png'):(auth('web')->user()->cover??asset('static/inspinia/img/logo.png')) }}" alt="" class="avatar-logo avatar-sm" style="width: 70px;">
                                 <div class="media-body">
                                     <!-- <h5 class="text-truncate"><a href="#" class="text-dark">请登录</a></h5> -->
                                     <p class="text-muted">
-                                        <i class="mdi mdi-account mr-1"></i> 请登录
+                                        <i class="mdi mdi-account mr-1"></i> {{ auth('web')->guest()?'请登录':(auth('web')->user()->nickname??'无名') }}
                                     </p>
                                 </div>
                             </div>
 
                             <hr class="my-1">
-
-                            <div class="row text-center" style="padding: 15px 0 0;">
-                                <a href="/docs/auth/qqlogin" class="col-6">
-                                    <div style="padding-top:5px;">
-                                        <h5><i class="icon fa fa-qq fa-lg mr-2 ri-qq-line"></i></h5>
-                                        <p class="text-muted mb-2 font-size-12">QQ登录</p>
-                                    </div>
-                                </a>
-                                <a href="/docs/auth/qqlogin" class="col-6">
-                                    <div style="padding-top:5px;">
-                                        <h5><i class="icon fa fa-weibo fa-lg mr-2 ri-weibo-fill"></i></h5>
-                                        <p class="text-muted mb-2 font-size-12">微博登录</p>
-                                    </div>
-                                </a>
-                            </div>
+                            @if (auth('web')->guest())
+                                <div class="row text-center" style="padding: 15px 0 0;">
+                                    <a href="/docs/auth/qqlogin" class="col-6">
+                                        <div style="padding-top:5px;">
+                                            <h5><i class="icon fa fa-qq fa-lg mr-2 ri-qq-line"></i></h5>
+                                            <p class="text-muted mb-2 font-size-12">QQ登录</p>
+                                        </div>
+                                    </a>
+                                    <a href="/docs/auth/qqlogin" class="col-6">
+                                        <div style="padding-top:5px;">
+                                            <h5><i class="icon fa fa-weibo fa-lg mr-2 ri-weibo-fill"></i></h5>
+                                            <p class="text-muted mb-2 font-size-12">微博登录</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="row text-center" style="padding: 15px 0 0;">
+                                    <a class="col-12 text-danger" href="/docs/auth/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> 退出登录</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

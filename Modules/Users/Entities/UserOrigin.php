@@ -130,29 +130,31 @@ class UserOrigin extends Model
         }
 
         if (!$userOrigin) {
-            $userOrigin = new UserOrigin([
-                'user_id' => !empty($user) ? $user['id'] : null,
-                'open_id' => $openId ?? null,
-                'source'  => $source,
-
-                'nickname' => $nickname ?? null,
-                'gender'   => $gender ?? 0,//'性别：0未设置，1男，2女');
-                'cover'    => $cover ?? null,
-
-                'country'  => $country,
-                'province' => $province,
-                'city'     => $city,
-                'county'   => $county,
-                'town'     => $town,
-                'village'  => $village,
-                'unionid'  => $unionId,
-
-                'all' => json_encode($data),
-            ]);
-            $userOrigin->save();
-            $userOrigin->refresh();
+            $userOrigin = new UserOrigin();
         }
+        $origin = $userOrigin->fill([
+            'user_id' => !empty($user) ? $user['id'] : null,
+            'open_id' => $openId ?? null,
+            'source'  => $source,
 
-        return $userOrigin;
+            'nickname' => $nickname ?? null,
+            'gender'   => $gender ?? 0,//'性别：0未设置，1男，2女');
+            'cover'    => $cover ?? null,
+
+            'country'  => $country,
+            'province' => $province,
+            'city'     => $city,
+            'county'   => $county,
+            'town'     => $town,
+            'village'  => $village,
+            'unionid'  => $unionId,
+
+            'all' => json_encode($data),
+        ]);
+        $origin->save();
+        $origin->refresh();
+
+
+        return $origin;
     }
 }
