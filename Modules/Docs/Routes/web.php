@@ -47,6 +47,6 @@ Route::prefix('docs')->name('docs.')->group(function () {
         Route::get('qqlogin', [Web\DocsAuthController::class, 'qqlogin'])->name('qqlogin');
         Route::get('weibologin', [Web\DocsAuthController::class, 'weibologin'])->name('weibologin');
 
-        Route::post('callback', [Web\DocsAuthController::class, 'callback'])->name('callback');
+        Route::any('callback', [Web\DocsAuthController::class, 'callback'])->name('callback');
     });
 });
