@@ -76,11 +76,12 @@ class DocsAuthController extends DocsBaseController
         $remember = false; // 是否记住密码
         if (!auth('web')->loginUsingId($user['id'], $remember)) {
             if ($toAuth = $this->guestToAuth()) {
+                die('401');
                 return $toAuth;
             }
         }
-        $jump_url = request()->input('source_url', '');
-        $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
+//        $jump_url = request()->input('source_url', '');
+//        $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 //        dump(auth('web')->user());
 //dd($to);
 //        return redirect($to);
