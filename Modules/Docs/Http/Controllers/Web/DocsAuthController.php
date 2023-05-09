@@ -74,13 +74,14 @@ class DocsAuthController extends DocsBaseController
         $user = collect(request()->all())->except(['sys'])->toArray();
 //
         $remember = false; // 是否记住密码
-        dump($user);
-        dd($user['id']);
-//        if (!auth('web')->loginUsingId($user['id'], $remember)) {
-//            if ($toAuth = $this->guestToAuth()) {
-//                return $toAuth;
-//            }
-//        }
+        dd(auth('web')->loginUsingId($user['id'], $remember));
+//        dump($user);
+//        dd($user['id']);
+        if (!auth('web')->loginUsingId($user['id'], $remember)) {
+            if ($toAuth = $this->guestToAuth()) {
+                return $toAuth;
+            }
+        }
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 
