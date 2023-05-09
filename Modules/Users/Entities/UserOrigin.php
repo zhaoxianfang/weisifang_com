@@ -87,8 +87,9 @@ class UserOrigin extends Model
         $user = get_user_info();
 
         // 第三方数据来源
-        $openId = $data['openid'] ?? ($data['open_id'] ?? $data['uid']);
-        $openId = !empty($openId) ? $openId : (!empty($data['mobile']) ? $data['mobile'] : (!empty($data['email']) ? $data['email'] : null));
+        $openId  = $data['openid'] ?? ($data['open_id'] ?? $data['uid']);
+        $openId  = !empty($openId) ? $openId : (!empty($data['mobile']) ? $data['mobile'] : (!empty($data['email']) ? $data['email'] : null));
+        $unionId = !empty($data['unionid']) ? $data['unionid'] : null;
 
         if (in_array($source, [self::SOURCE_ACCOUNT_REGISTER, self::SOURCE_SMS])) {
             // 注册或者短信登录，一定会有 User::class 数据
@@ -116,7 +117,10 @@ class UserOrigin extends Model
                 $province = $data['province'];
                 $city     = $data['city'];
             }
-            if ($openId) {
+            if (!empty($unionId)) {
+                $userOrigin = self::query()->where('unionid', $unionId)->first();
+            }
+            if (empty($userOrigin) && $openId) {
                 $userOrigin = self::query()->where('open_id', $openId)->first();
             }
 
@@ -141,7 +145,7 @@ class UserOrigin extends Model
                 'county'   => $county,
                 'town'     => $town,
                 'village'  => $village,
-                'unionid'  => !empty($data['unionid']) ? $data['unionid'] : null,
+                'unionid'  => $unionId,
 
                 'all' => json_encode($data),
             ]);

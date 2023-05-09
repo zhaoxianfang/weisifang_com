@@ -1,117 +1,16 @@
 <?php
-
-if (!function_exists('get_user_info')) {
+if (!function_exists('source_local_website')) {
     /**
-     * 获取laravel 已经登录的用户信息，没有登录的 返回false
+     * 判断跳转url的上一个地址（来源地址）是不是从本站跳转过来的
      *
-     * @param string|null $field
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return array [true|false,$referer]
      */
-    function get_user_info(?string $field = null): ?\Illuminate\Contracts\Auth\Authenticatable
+    function source_local_website()
     {
-        $user     = null;
-        $authList = config('auth.guards');
-        foreach ($authList as $authName => $val) {
-            if (auth($authName)->check()) {
-                $user = auth($authName)->user();
-                break;
-            }
-        }
-        return !empty($user) ? (empty($field) ? $user : $user[$field]) : null;
+        $referer = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        return [empty($referer) || stripos($referer, 'weisifang') !== false, $referer];
     }
 }
-if (!function_exists('is_mobile')) {
-    /**
-     * 判断当前浏览器是否为移动端
-     */
-    function is_mobile(): bool
-    {
-        if (isset($_SERVER['HTTP_VIA']) && stristr($_SERVER['HTTP_VIA'], "wap")) {
-            return true;
-        } elseif (isset($_SERVER['HTTP_ACCEPT']) && strpos(strtoupper($_SERVER['HTTP_ACCEPT']), "VND.WAP.WML")) {
-            return true;
-        } elseif (isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE'])) {
-            return true;
-        } elseif (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/(blackberry|configuration\/cldc|hp |hp-|htc |htc_|htc-|iemobile|kindle|midp|mmp|motorola|mobile|nokia|opera mini|opera |Googlebot-Mobile|YahooSeeker\/M1A1-R2D2|android|iphone|ipod|mobi|palm|palmos|pocket|portalmmm|ppc;|smartphone|sonyericsson|sqh|spv|symbian|treo|up.browser|up.link|vodafone|windows ce|xda |xda_)/i', $_SERVER['HTTP_USER_AGENT'])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-
-if (!function_exists('str_code')) {
-    /**
-     * 字符串加密解密函数
-     *
-     * @param string      $string    字符串
-     * @param string      $operation ENCODE:加密 DECODE:解密
-     * @param int         $expiry    过期时间（s） 0 表示不设置过期时间
-     * @param string|null $key       自定义密钥
-     *
-     * @return array|string|string[]
-     */
-    function str_code(string $string, string $operation = 'ENCODE', int $expiry = 0, ?string $key = '')
-    {
-        try {
-            if ($operation == 'DECODE') {
-                $string = str_replace(['[a]', '[b]', '[c]'], ['+', '&', '/'], $string);
-            }
-
-            $ckey_length = 4;
-            $key         = md5($key ? $key : 'weisifang.com');
-            $keya        = md5(substr($key, 0, 16));
-            $keyb        = md5(substr($key, 16, 16));
-            $keyc        = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
-            $cryptkey    = $keya . md5($keya . $keyc);
-            $key_length  = strlen($cryptkey);
-
-            $string = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
-
-            $string_length = strlen($string);
-            $result        = '';
-            $box           = range(0, 255);
-            $rndkey        = array();
-
-            for ($i = 0; $i <= 255; $i++) {
-                $rndkey[$i] = ord($cryptkey[$i % $key_length]);
-            }
-
-            for ($j = $i = 0; $i < 256; $i++) {
-                $j       = ($j + $box[$i] + $rndkey[$i]) % 256;
-                $tmp     = $box[$i];
-                $box[$i] = $box[$j];
-                $box[$j] = $tmp;
-            }
-
-            for ($a = $j = $i = 0; $i < $string_length; $i++) {
-                $a       = ($a + 1) % 256;
-                $j       = ($j + $box[$a]) % 256;
-                $tmp     = $box[$a];
-                $box[$a] = $box[$j];
-                $box[$j] = $tmp;
-                $result  .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
-            }
-
-            if ($operation == 'DECODE') {
-                if ((substr($result, 0, 10) == 0 || (int)substr($result, 0, 10) - time() > 0) && substr($result, 10, 16) == substr(md5(substr($result, 26) . $keyb), 0, 16)) {
-                    return substr($result, 26);
-                } else {
-                    return '';
-                }
-            } else {
-                $ustr = $keyc . str_replace('=', '', base64_encode($result));
-                $ustr = str_replace(['+', '&', '/'], ['[a]', '[b]', '[c]'], $ustr);
-                return $ustr;
-            }
-        } catch (\Exception $err) {
-            return false;
-        }
-    }
-}
-
 if (!function_exists('to_full_text_search_str')) {
     /**
      * 把搜索字符串 组装 成 mysql 全文索引搜索 FullText 的搜索关键字字符串

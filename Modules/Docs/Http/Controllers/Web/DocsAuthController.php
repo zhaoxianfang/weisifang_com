@@ -41,7 +41,9 @@ class DocsAuthController extends DocsBaseController
 
     public function qqlogin()
     {
-        $url = url('docs/auth/callback');
+        // 判断来源url
+        list($local, $referer) = source_local_website();
+        $url = ($local && $referer) ? $referer : url('docs/auth/callback');
         return to_route('callback.tencent.login', ['callback_url' => urlencode($url)], 302);
     }
 

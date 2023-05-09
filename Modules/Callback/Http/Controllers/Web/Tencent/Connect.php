@@ -49,9 +49,6 @@ class Connect extends CallbackController
         $callbackUrl = $auth->getStateParam();
         // 记录用户信息
         $loginUserInfo = UserAuthServices::instance()->fastLogin('qq', $userInfo);
-        dump($userInfo);
-        dump($callbackUrl);
-        dd($loginUserInfo);
         if ($callbackUrl) {
             return buildRequestFormAndSend($callbackUrl, $loginUserInfo);
         } else {

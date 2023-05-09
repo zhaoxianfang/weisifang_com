@@ -3,6 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use \Modules\Docs\Http\Controllers\Web;
 
+Route::pattern('id', '[0-9]+');
+Route::pattern('ids', '[,0-9]+');
+
+Route::pattern('name', '[a-zA-Z]+');
+
+Route::pattern('app', '[0-9]+');
+Route::pattern('doc', '[0-9]+');
+Route::pattern('menu', '[0-9]+');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +24,7 @@ use \Modules\Docs\Http\Controllers\Web;
 
 Route::prefix('docs')->name('docs')->group(function () {
     // 文档主页
-    Route::get('/', [Web\DocsController::class, 'index'])->name('docs_home');
+    Route::get('/', [Web\DocsController::class, 'index'])->name('home');
     // apps 应用管理
     Route::prefix('')->group(function () {
         // 创建文档
@@ -29,14 +37,14 @@ Route::prefix('docs')->name('docs')->group(function () {
     // 登录注册授权页
     Route::prefix('auth')->name('auth.')->group(function () {
         // 登录页
-        Route::get('login', [Web\DocsAuthController::class,'login'])->name('login');
-        Route::post('login', [Web\DocsAuthController::class,'loginHandle']);
-        Route::get('register', [Web\DocsAuthController::class,'register'])->name('register');
-        Route::post('register', [Web\DocsAuthController::class,'registerHandle']);
+        Route::get('login', [Web\DocsAuthController::class, 'login'])->name('login');
+        Route::post('login', [Web\DocsAuthController::class, 'loginHandle']);
+        Route::get('register', [Web\DocsAuthController::class, 'register'])->name('register');
+        Route::post('register', [Web\DocsAuthController::class, 'registerHandle']);
 
-        Route::get('qqlogin', [Web\DocsAuthController::class,'qqlogin'])->name('qqlogin');
-        Route::get('weibologin', [Web\DocsAuthController::class,'weibologin'])->name('weibologin');
+        Route::get('qqlogin', [Web\DocsAuthController::class, 'qqlogin'])->name('qqlogin');
+        Route::get('weibologin', [Web\DocsAuthController::class, 'weibologin'])->name('weibologin');
 
-        Route::post('callback', [Web\DocsAuthController::class,'loggedIn']);
+        Route::post('callback', [Web\DocsAuthController::class, 'loggedIn']);
     });
 });
