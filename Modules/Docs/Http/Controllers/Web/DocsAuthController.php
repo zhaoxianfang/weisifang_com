@@ -71,21 +71,23 @@ class DocsAuthController extends DocsBaseController
     // 登录回调
     public function callback()
     {
-        $user = collect(request()->all())->except(['sys'])->toArray();
-//dump($user);
-        $remember = false; // 是否记住密码
-        if (!auth('web')->loginUsingId($user['id'], $remember)) {
-            if ($toAuth = $this->guestToAuth()) {
-                die('401');
-                return $toAuth;
+        try {
+            $user = collect(request()->all())->except(['sys'])->toArray();
+
+            $remember = false; // 是否记住密码
+            if (!auth('web')->loginUsingId($user['id'], $remember)) {
+                if ($toAuth = $this->guestToAuth()) {
+                    return $toAuth;
+                }
             }
-        }
-//        $jump_url = request()->input('source_url', '');
-//        $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
+            $jump_url = request()->input('source_url', '');
+            $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 //        dump(auth('web')->user());
 //dd($to);
-//        return redirect($to);
-         return to_route('docs.home', [], 302);
-
+            return redirect($to);
+//            return to_route('docs.home', [], 302);
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
     }
 }
