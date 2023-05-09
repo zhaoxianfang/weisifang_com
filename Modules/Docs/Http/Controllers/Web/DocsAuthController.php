@@ -72,32 +72,27 @@ class DocsAuthController extends DocsBaseController
     // 登录回调
     public function callback()
     {
-//        dd(bcrypt('zhaoxf001.')); // $2y$10$jYjSM5t21piqqw0H3t.Ib.hEmBEHVVbJwnIvBdLnoIYPkd9OO2W8y
-        $res = auth('web')->attempt(['mobile' => '18388050779','password'=>'zhaoxf001.'], false);
-        dump($res);
-        dd(auth('web')->user());
+
         $user = collect(request()->all())->except(['sys'])->toArray();
-//
+
         $remember = false; // 是否记住密码
-        $res      = UserAuthServices::instance()->auth('web')->byToken(false)->use('id')->needRemember($remember)->login(1);
-        if ($res['code'] != 200) {
+//        $res      = UserAuthServices::instance()->auth('web')->byToken(false)->use('id')->needRemember($remember)->login(1);
+//        if ($res['code'] != 200) {
+//            if ($toAuth = $this->guestToAuth()) {
+//                return $toAuth;
+//            }
+//        }
+
+        // User 模型使用的是 Passport ，所以 Sanctum 的操作不一定全部生效
+        if (!auth('web')->loginUsingId($user['id'], $remember)) {
             if ($toAuth = $this->guestToAuth()) {
                 return $toAuth;
             }
         }
-        dd($res);
-        dd(auth('web')->loginUsingId($user['id'], $remember));
-
-        // User 模型使用的是 Passport ，所以 Sanctum 的操作不一定全部生效
-        // if (!auth('web')->loginUsingId($user['id'], $remember)) {
-        //     if ($toAuth = $this->guestToAuth()) {
-        //         return $toAuth;
-        //     }
-        // }
         $jump_url = request()->input('source_url', '');
         $to       = $jump_url ? urldecode($jump_url) : route('docs.home');
 
-//        return redirect()->away($to); // 可跳转外部地址
+        // return redirect()->away($to); // 可跳转外部地址
         // return to_route('docs.home', [], 302);
         return redirect($to);
     }
